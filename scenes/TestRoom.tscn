@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://keqtl4072nlg"]
+
+[ext_resource type="Script" uid="uid://3hd36k0jywgi" path="res://scripts/testing_stuff.gd" id="1_1ahhd"]
+
+[node name="RoomTest" type="TextureRect"]
+script = ExtResource("1_1ahhd")

@@ -28,7 +28,7 @@ const directions: Array = [
 func _ready() -> void:
 	max_cells_remaining = depth
 	
-	var start_room: Node2D = room_test.instantiate()
+	var start_room: TextureRect = room_test.instantiate()
 	start_room.global_position = Vector2(0, 0)
 	add_child(start_room)
 	
@@ -48,11 +48,11 @@ func _ready() -> void:
 	
 	for cell in cell_positions:
 		add_room_data(cell)
-		
-		add_data_line(cell_positions[index], room_connections[index], room_directions[index])
+		add_data_line(cell_positions[index], room_connections[index], room_directions[index], room_file_paths[index])
 		
 		var room_instance = room_test.instantiate()
 		room_instance.global_position = to_actual(cell)
+		room_instance.texture = load(room_file_paths[index])
 		
 		if cell == starting_room_cell || cell == boss_room_cell:
 			room_instance.modulate = Color.RED
@@ -71,6 +71,8 @@ func _process(_delta: float) -> void:
 		$Camera2D.global_position += Vector2.DOWN * 100
 	if Input.is_key_pressed(KEY_D):
 		$Camera2D.global_position += Vector2.RIGHT * 100
+	if Input.is_action_just_pressed("ENTER"):
+		get_tree().reload_current_scene()
 
 func to_cell(pos: Vector2) -> Vector2i:
 	return Vector2i(pos / Vector2(get_viewport_rect().size))
@@ -101,8 +103,12 @@ func initialize_path() -> void:
 
 func check_valid_occupancy(cell: Vector2i, root: Vector2i, ignore: Vector2i) -> bool:
 	for dir in directions:
-		if cell + dir in cell_positions && cell + dir != root && dir != ignore:
-			return false
+		if cell + dir in cell_positions && cell + dir != root:
+			if dir == ignore && randi_range(1, 2) == 2 && cell + dir != boss_room_cell:
+				continue
+			else:
+				return false
+			
 	return true
 
 func check_adjacent_tiles(cell: Vector2i) -> bool:
@@ -147,7 +153,6 @@ func add_room_data(root_cell: Vector2i) -> void:
 		1 - [(0, -1)]
 	'''
 	
-	
 	var connections: int = 0
 	var connected_directions: Array = []
 	
@@ -166,48 +171,41 @@ func add_room_data(root_cell: Vector2i) -> void:
 	
 	if connections == 1:
 		for dir in directions:
-			if room_connections[0] == dir:
-				path += str(connections) + "/" + str(rotations)
+			if connected_directions[0] == dir:
+				path += str(rotations)
 			else:
 				rotations += 1
 	elif connections == 2:
-		if room_directions[0] == -room_directions[1]:
+		if connected_directions[0] == -connected_directions[1]:
 			path += "straight/"
-			if room_directions[0] == Vector2i.UP:
+			if connected_directions[0] == Vector2i.UP:
 				path += "0"
 			else:
 				path += "1"
 		else:
-			for num in range(1, 5):
-				pass
-	
-	'''match connections:
-		1:
-			match connected_directions[0]:
-				Vector2i.UP:
-					path += "cap_up.png"
-					return
-				Vector2i.RIGHT:
-					path += "cap_right.png"
-					return
-				Vector2i.LEFT:
-					path += "cap_left.png"
-					return
-				Vector2i.DOWN:
-					path += "cap_down.png"
-					return
-		2:
-			
-			return
-		3:
-			return
-		4:
-			return
-		_:
-			print("ERROR - LINE 158")'''
-	
-	
+			path += "corner/"
+			for num in range(0, 4):
+				for it in range(0, len(connected_directions)):
+					if connected_directions[it] not in [Vector2i(Vector2(0, -1).rotated(PI/2 * num)), Vector2i(Vector2(1, 0).rotated(PI/2 * num))]:
+						rotations += 1
+						break
+					elif it + 1 == len(connected_directions):
+						path += str(rotations)
+	elif connections == 3:
+		for num in range(0, 4):
+			for it in range(0, len(connected_directions)):
+				if connected_directions[it] not in [Vector2i(Vector2(0, -1).rotated(PI/2 * num)), Vector2i(Vector2(1, 0).rotated(PI/2 * num)), Vector2i(Vector2(0, 1).rotated(PI/2 * num))]:
+					rotations += 1
+					break
+				elif it + 1 == len(connected_directions):
+					path += str(rotations)
 
-func add_data_line(cell: Vector2i, connects: int, dirs: Array) -> void:
-	var data: Array = [cell, connects, dirs]
+	elif connections == 4:
+		path += "center/"
+	
+	path += "/room.png"
+	room_file_paths.append(path)
+
+func add_data_line(cell: Vector2i, connects: int, dirs: Array, path: String) -> void:
+	var data: Array = [cell, connects, dirs, path]
 	map_data.append(data)
