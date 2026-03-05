@@ -11,20 +11,20 @@ Room Gen Tips:
 
 var room_test: PackedScene = preload("res://scenes/TestRoom.tscn")
 
-var map_data: Array = []
+var map_data: Array[Array] = []
 
-var cell_positions: Array = []
-var room_connections: Array = []
-var room_directions: Array = []
-var room_file_paths: Array = []
+var cell_positions: Array[Vector2i] = []
+var room_connections: Array[int] = []
+var room_directions: Array[Array] = []
+var room_file_paths: Array[String] = []
 
-var blocked_cells: Array = []
+var blocked_cells: Array[Vector2i] = []
 
 var starting_room_cell: Vector2i
 var boss_room_cell: Vector2i
 var max_cells_remaining = depth
 
-const directions: Array = [
+const directions: Array[Vector2i] = [
 	Vector2i.UP,
 	Vector2i.RIGHT,
 	Vector2i.DOWN,
@@ -62,7 +62,7 @@ func _ready() -> void:
 		add_room_data(cell)
 		add_data_line(cell_positions[index], room_connections[index], room_directions[index], room_file_paths[index])
 		
-		var room_instance = room_test.instantiate()
+		var room_instance: TextureRect = room_test.instantiate()
 		room_instance.global_position = to_actual(cell)
 		room_instance.texture = load(room_file_paths[index])
 		
@@ -120,7 +120,6 @@ func check_valid_occupancy(cell: Vector2i, root: Vector2i, ignore: Vector2i) -> 
 				continue
 			else:
 				return false
-			
 	return true
 
 func check_adjacent_tiles(cell: Vector2i) -> bool:
@@ -132,8 +131,8 @@ func check_adjacent_tiles(cell: Vector2i) -> bool:
 func check_validity(cell: Vector2i) -> bool:
 	return !check_adjacent_tiles(cell) && !(cell in blocked_cells)
 
-func get_available_cells(cell: Vector2i) -> Array:
-	var cells = []
+func get_available_cells(cell: Vector2i) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
 	for dir in directions:
 		if cell + dir not in cell_positions:
 			if check_valid_occupancy(cell + dir, cell, dir):
@@ -142,8 +141,8 @@ func get_available_cells(cell: Vector2i) -> Array:
 
 func generate_cells(root_cell: Vector2i) -> void:
 	if max_cells_remaining > 0:
-		var valid_cells: Array = get_available_cells(root_cell)
-		var dir_num = randi_range(1, 3)
+		var valid_cells: Array[Vector2i] = get_available_cells(root_cell)
+		var dir_num: int = randi_range(1, 3)
 		
 		if len(valid_cells) > 0:
 			if dir_num > len(valid_cells):
@@ -166,7 +165,7 @@ func add_room_data(root_cell: Vector2i) -> void:
 	'''
 	
 	var connections: int = 0
-	var connected_directions: Array = []
+	var connected_directions: Array[Vector2i] = []
 	
 	var rotations: int = 0
 	var path: String = "res://rooms/"
