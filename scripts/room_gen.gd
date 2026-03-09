@@ -7,7 +7,7 @@ Room Gen Tips:
 ##Number of rooms in the path to the final boss room. Does not include the starting room.
 @export_range(1, 1000) var length: int = 10
 ##Number of rooms that can generate additional paths. Creates the branches of the dungeon.
-@export_range(1, 1000) var depth: int = 15
+@export_range(0, 1000) var depth: int = 15
 
 var room_test: PackedScene = preload("res://scenes/TestRoom.tscn")
 
@@ -32,12 +32,6 @@ const directions: Array[Vector2i] = [
 ]
 
 func _ready() -> void:
-	#Overwrites to Default if 0 or Negative Number is Used
-	if length < 1:
-		length = 10
-	if depth < 1:
-		depth = 15
-	
 	max_cells_remaining = depth
 	
 	var start_room: TextureRect = room_test.instantiate()
