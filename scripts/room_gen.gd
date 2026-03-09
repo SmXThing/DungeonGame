@@ -73,6 +73,8 @@ func _ready() -> void:
 	
 	for line in map_data:
 		print(line)
+	
+	print(str(len(cell_positions)) + " rooms in total!")
 
 func _process(_delta: float) -> void:
 	if Input.is_key_pressed(KEY_W):
@@ -145,7 +147,7 @@ func generate_cells(root_cell: Vector2i) -> void:
 		var dir_num: int = randi_range(1, 3)
 		
 		if len(valid_cells) > 0:
-			if dir_num > len(valid_cells):
+			if dir_num >= len(valid_cells):
 				for cell in valid_cells:
 					cell_positions.append(cell)
 					max_cells_remaining -= 1
