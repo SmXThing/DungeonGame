@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://bmf86mixb5e0j"]
+[gd_scene load_steps=15 format=4 uid="uid://bmf86mixb5e0j"]
 
 [ext_resource type="Texture2D" uid="uid://5waua11k71iy" path="res://assets/tiles.png" id="1_rnsln"]
+[ext_resource type="PackedScene" uid="uid://drkl1ct2gk2mu" path="res://scenes/Torch.tscn" id="2_vyecp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vyecp"]
 texture = ExtResource("1_rnsln")
@@ -264,9 +265,66 @@ texture = ExtResource("1_rnsln")
 2:8/0 = 0
 3:8/0 = 0
 4:8/0 = 0
+6:7/0 = 0
+6:6/0 = 0
+5:6/0 = 0
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_hf77l"]
+scenes/1/scene = ExtResource("2_vyecp")
 
 [sub_resource type="TileSet" id="TileSet_uadj8"]
 sources/0 = SubResource("TileSetAtlasSource_5b0sx")
+sources/1 = SubResource("TileSetScenesCollectionSource_hf77l")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pjq4h"]
+texture = ExtResource("1_rnsln")
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+12:5/0 = 0
+5:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+4:6/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_5b0sx"]
+sources/0 = SubResource("TileSetAtlasSource_pjq4h")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hf77l"]
+texture = ExtResource("1_rnsln")
+6:7/0 = 0
+6:6/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_xqvw2"]
+sources/0 = SubResource("TileSetAtlasSource_hf77l")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnsln"]
 size = Vector2(248, 120)
@@ -287,6 +345,12 @@ tile_set = SubResource("TileSet_pjq4h")
 
 [node name="decoration" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_uadj8")
+
+[node name="decoration_layer2" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_5b0sx")
+
+[node name="chest_placeholder" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_xqvw2")
 
 [node name="PlayerDetectionArea" type="Area2D" parent="." groups=["RoomTransition"]]
 collision_layer = 512

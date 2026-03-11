@@ -17,6 +17,7 @@ var cell_positions: Array[Vector2i] = []
 var room_connections: Array[int] = []
 var room_directions: Array[Array] = []
 var room_file_paths: Array[String] = []
+var room_names: Array[String] = []
 
 var blocked_cells: Array[Vector2i] = []
 
@@ -54,33 +55,54 @@ func _ready() -> void:
 	
 	for cell in cell_positions:
 		add_room_data(cell)
-		add_data_line(cell_positions[index], room_connections[index], room_directions[index], room_file_paths[index])
+		add_data_line(cell_positions[index], room_connections[index], room_directions[index], room_file_paths[index], room_names[index])
 		
-		var room_instance: TextureRect = room_test.instantiate()
+		'''var room_instance: TextureRect = room_test.instantiate()
 		room_instance.global_position = to_actual(cell)
 		room_instance.texture = load(room_file_paths[index])
 		
 		if cell == starting_room_cell || cell == boss_room_cell:
 			room_instance.modulate = Color.RED
-		add_child(room_instance)
+		add_child(room_instance)'''
 		index += 1
 	
+	index = 0
+	
 	for line in map_data:
-		print(line)
+		print(room_file_paths[index] + "/" + room_names[index])
+		var room_scene: PackedScene = load(room_file_paths[index] + "/" + room_names[index])
+		
+		var room:= room_scene.instantiate()
+		room.global_position = to_actual(cell_positions[index])
+		
+		if cell_positions[index] == starting_room_cell || cell_positions[index] == boss_room_cell:
+			room.modulate = Color.GREEN
+		
+		add_child(room)
+		index += 1
 	
 	print(str(len(cell_positions)) + " rooms in total!")
 
 func _process(_delta: float) -> void:
 	if Input.is_key_pressed(KEY_W):
-		$Camera2D.global_position += Vector2.UP * 100
+		$Camera2D.global_position += Vector2.UP * 10
 	if Input.is_key_pressed(KEY_A):
-		$Camera2D.global_position += Vector2.LEFT * 100
+		$Camera2D.global_position += Vector2.LEFT * 10
 	if Input.is_key_pressed(KEY_S):
-		$Camera2D.global_position += Vector2.DOWN * 100
+		$Camera2D.global_position += Vector2.DOWN * 10
 	if Input.is_key_pressed(KEY_D):
-		$Camera2D.global_position += Vector2.RIGHT * 100
-	if Input.is_action_just_pressed("ENTER"):
+		$Camera2D.global_position += Vector2.RIGHT * 10
+	if Input.is_action_just_pressed("ENTER") && Input.is_action_pressed("ESC"):
 		get_tree().reload_current_scene()
+	
+	if Input.is_action_pressed("CTRL"): 
+		if Input.is_action_pressed("ui_up"):
+			$Camera2D.zoom += 0.01 * Vector2(1, 1)
+		elif Input.is_action_pressed("ui_down") && $Camera2D.zoom.x > 0.01:
+			$Camera2D.zoom -= 0.01 * Vector2(1, 1)
+		if Input.is_action_just_pressed("ENTER"):
+			$DirectionalLight2D.visible = !$DirectionalLight2D.visible
+		
 
 func to_cell(pos: Vector2) -> Vector2i:
 	return Vector2i(pos / Vector2(get_viewport_rect().size))
@@ -165,6 +187,7 @@ func add_room_data(root_cell: Vector2i) -> void:
 	
 	var rotations: int = 0
 	var path: String = "res://rooms/"
+	var room_name: String = "room_"
 	
 	for dir in directions:
 		if root_cell + dir in cell_positions:
@@ -172,6 +195,7 @@ func add_room_data(root_cell: Vector2i) -> void:
 			connected_directions.append(dir)
 	
 	path += str(connections) + "/"
+	room_name += str(connections) + "-"
 	
 	room_connections.append(connections)
 	room_directions.append(connected_directions)
@@ -180,17 +204,22 @@ func add_room_data(root_cell: Vector2i) -> void:
 		for dir in directions:
 			if connected_directions[0] == dir:
 				path += str(rotations)
+				room_name += str(rotations) + "_"
 			else:
 				rotations += 1
 	elif connections == 2:
 		if connected_directions[0] == -connected_directions[1]:
 			path += "straight/"
+			room_name += "S"
 			if connected_directions[0] == Vector2i.UP:
 				path += "0"
+				room_name += "0_"
 			else:
 				path += "1"
+				room_name += "1_"
 		else:
 			path += "corner/"
+			room_name += "C"
 			for num in range(0, 4):
 				for it in range(0, len(connected_directions)):
 					if connected_directions[it] not in [Vector2i(Vector2(0, -1).rotated(PI/2 * num)), Vector2i(Vector2(1, 0).rotated(PI/2 * num))]:
@@ -198,6 +227,7 @@ func add_room_data(root_cell: Vector2i) -> void:
 						break
 					elif it + 1 == len(connected_directions):
 						path += str(rotations)
+						room_name += str(rotations) + "_"
 	elif connections == 3:
 		for num in range(0, 4):
 			for it in range(0, len(connected_directions)):
@@ -206,13 +236,17 @@ func add_room_data(root_cell: Vector2i) -> void:
 					break
 				elif it + 1 == len(connected_directions):
 					path += str(rotations)
-
+					room_name += str(rotations) + "_"
 	elif connections == 4:
 		path += "center/"
+		room_name += "0_"
 	
-	path += "/room.png"
+	var variation: int = randi_range(1, globals.get_num_files(path, "tscn"))
+	room_name += "0" + str(variation) + ".tscn"
+	
 	room_file_paths.append(path)
+	room_names.append(room_name)
 
-func add_data_line(cell: Vector2i, connects: int, dirs: Array, path: String) -> void:
-	var data: Array = [cell, connects, dirs, path]
+func add_data_line(cell: Vector2i, connects: int, dirs: Array, path: String, room_name: String) -> void:
+	var data: Array = [cell, connects, dirs, path, room_name]
 	map_data.append(data)

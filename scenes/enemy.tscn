@@ -7,11 +7,12 @@
 size = Vector2(8, 4)
 
 [node name="Enemy" type="CharacterBody2D"]
+y_sort_enabled = true
 collision_layer = 4
 script = ExtResource("1_md0e3")
 speed = 30.0
 attack_range = 12.0
-detection_range = 50.0
+detection_range = 128.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -1.4901161e-08)
