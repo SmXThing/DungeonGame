@@ -36,7 +36,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 4.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_djai8"]
@@ -50,10 +50,16 @@ fill_from = Vector2(0.5046729, 0.4813084)
 
 [node name="Torch" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_bma1w")
-frame_progress = 0.08440797
+frame_progress = 0.24504837
 script = ExtResource("2_dw1iy")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="Light" type="PointLight2D" parent="."]
 color = Color(0.9999997, 0.66654414, 0.30486086, 1)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_g2t0v")
+
+[node name="FlickerTimer" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[connection signal="timeout" from="FlickerTimer" to="." method="_on_flicker_timer_timeout"]
