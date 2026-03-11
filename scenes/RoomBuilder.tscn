@@ -344,9 +344,11 @@ tile_map_data = PackedByteArray("AAARAAkAAAACAAUAAAARAAgAAAACAAQAAAARAAcAAAACAAQ
 tile_set = SubResource("TileSet_pjq4h")
 
 [node name="decoration" type="TileMapLayer" parent="."]
+y_sort_enabled = true
 tile_set = SubResource("TileSet_uadj8")
 
 [node name="decoration_layer2" type="TileMapLayer" parent="."]
+y_sort_enabled = true
 tile_set = SubResource("TileSet_5b0sx")
 
 [node name="chest_placeholder" type="TileMapLayer" parent="."]
