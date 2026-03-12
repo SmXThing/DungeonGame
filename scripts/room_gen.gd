@@ -8,6 +8,8 @@ Room Gen Tips:
 @export_range(1, 1000) var length: int = 10
 ##Number of rooms that can generate additional paths. Creates the branches of the dungeon.
 @export_range(0, 1000) var depth: int = 15
+@export var camera_speed: int = 10
+var var_camera_speed: int
 
 var room_test: PackedScene = preload("res://scenes/TestRoom.tscn")
 
@@ -33,6 +35,7 @@ const directions: Array[Vector2i] = [
 ]
 
 func _ready() -> void:
+	var_camera_speed = camera_speed
 	max_cells_remaining = depth
 	
 	var start_room: TextureRect = room_test.instantiate()
@@ -85,13 +88,13 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_key_pressed(KEY_W):
-		$Camera2D.global_position += Vector2.UP * 10
+		$Camera2D.global_position += Vector2.UP * var_camera_speed
 	if Input.is_key_pressed(KEY_A):
-		$Camera2D.global_position += Vector2.LEFT * 10
+		$Camera2D.global_position += Vector2.LEFT * var_camera_speed
 	if Input.is_key_pressed(KEY_S):
-		$Camera2D.global_position += Vector2.DOWN * 10
+		$Camera2D.global_position += Vector2.DOWN * var_camera_speed
 	if Input.is_key_pressed(KEY_D):
-		$Camera2D.global_position += Vector2.RIGHT * 10
+		$Camera2D.global_position += Vector2.RIGHT * var_camera_speed
 	if Input.is_action_just_pressed("ENTER") && Input.is_action_pressed("ESC"):
 		get_tree().reload_current_scene()
 	
@@ -102,6 +105,11 @@ func _process(_delta: float) -> void:
 			$Camera2D.zoom -= 0.01 * Vector2(1, 1)
 		if Input.is_action_just_pressed("ENTER"):
 			$DirectionalLight2D.visible = !$DirectionalLight2D.visible
+	
+	if Input.is_action_just_pressed("SHIFT"):
+		var_camera_speed *= 3
+	if Input.is_action_just_released("SHIFT"):
+		var_camera_speed = camera_speed
 		
 
 func to_cell(pos: Vector2) -> Vector2i:
