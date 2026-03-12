@@ -10,6 +10,7 @@ signal player_killed
 @export var health_bar: TextureProgressBar
 @export var camera: Camera2D
 @export var sprites: AnimatedSprite2D
+@export var light: PointLight2D
 
 const sprint_multiplier: float = 1.5
 
@@ -19,11 +20,15 @@ var held_weapon: Weapon
 var armor: Armor
 
 var status: Array
+var time: float = 0
 
 func _ready() -> void:
 	health_bar.value = player_health
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	time += delta
+	light.energy = 1.16 + 0.2 * sin(4 * time)
+	
 	var direction: Vector2 = Input.get_vector("KEY_A", "KEY_D", "KEY_W", "KEY_S")
 	
 	if direction:

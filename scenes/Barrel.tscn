@@ -1,0 +1,174 @@
+[gd_scene load_steps=22 format=3 uid="uid://d2keusojiit7m"]
+
+[ext_resource type="Texture2D" uid="uid://bxu0vwmgxjnq8" path="res://assets/Barrel.png" id="1_2unnq"]
+[ext_resource type="Script" uid="uid://bx2aknk6ujf3e" path="res://scripts/breakable_object.gd" id="1_yuusr"]
+[ext_resource type="Texture2D" uid="uid://b70vnq4ilit2g" path="res://assets/wood_particle_1.png" id="2_3siyj"]
+[ext_resource type="Texture2D" uid="uid://hroggbhxfhnp" path="res://assets/wood_particle_3.png" id="3_2unnq"]
+[ext_resource type="Texture2D" uid="uid://cn2wbs4dmwtr2" path="res://assets/metal_particle_1.png" id="4_fusc2"]
+[ext_resource type="AudioStream" uid="uid://blv8sb3eny53n" path="res://sounds/BarrelBreak1.mp3" id="6_mm2nh"]
+[ext_resource type="AudioStream" uid="uid://c5esfa2hjty62" path="res://sounds/BarrelBreak2.mp3" id="7_2xfme"]
+[ext_resource type="AudioStream" uid="uid://dg6dmp4rsu33a" path="res://sounds/BarrelBreak3.mp3" id="8_jnmep"]
+[ext_resource type="AudioStream" uid="uid://bm1hf65pslls7" path="res://sounds/BarrelBreak4.mp3" id="9_p4kj5"]
+[ext_resource type="AudioStream" uid="uid://bxs8vg4dv2g7h" path="res://sounds/BarrelBreak5.mp3" id="10_15atg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_58trb"]
+size = Vector2(12, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_81a2j"]
+size = Vector2(12, 15)
+
+[sub_resource type="Curve" id="Curve_s3vss"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_tp54j"]
+curve = SubResource("Curve_s3vss")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iqm4h"]
+particle_flag_disable_z = true
+angle_min = -19.99999
+angle_max = 20.000011
+direction = Vector3(0, 0, 0)
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = 60.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, 150, 0)
+linear_accel_min = -50.0
+linear_accel_max = -30.000002
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_tp54j")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.45
+
+[sub_resource type="Curve" id="Curve_3siyj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2unnq"]
+curve = SubResource("Curve_3siyj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fusc2"]
+particle_flag_disable_z = true
+spread = 180.0
+flatness = 1.0
+initial_velocity_min = 40.0
+initial_velocity_max = 100.0
+angular_velocity_min = -40.000015
+angular_velocity_max = 39.999985
+gravity = Vector3(0, 100, 0)
+linear_accel_min = -50.0
+linear_accel_max = -30.000002
+scale_min = 0.7
+scale_curve = SubResource("CurveTexture_2unnq")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 1.0
+
+[sub_resource type="Curve" id="Curve_2unnq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fusc2"]
+curve = SubResource("Curve_2unnq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s3vss"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 80.0
+initial_velocity_max = 180.0
+angular_velocity_min = -80.000015
+angular_velocity_max = 79.999985
+gravity = Vector3(0, 200, 0)
+linear_accel_min = -100.0
+linear_accel_max = -80.0
+scale_min = 0.19999999
+scale_max = 0.79999995
+scale_curve = SubResource("CurveTexture_fusc2")
+color = Color(1.1624898, 1.1624898, 1.1624898, 1)
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 1.0
+
+[node name="Barrel" type="CharacterBody2D" node_paths=PackedStringArray("particles", "collision", "hitbox", "sprite", "sfx", "deletion_timer")]
+position = Vector2(0, -6)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_yuusr")
+particles = NodePath("Particles")
+collision = NodePath("CollisionBox")
+hitbox = NodePath("HitboxArea")
+sprite = NodePath("Sprite")
+sfx = NodePath("Sounds")
+deletion_timer = NodePath("Timer")
+
+[node name="CollisionBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_58trb")
+debug_color = Color(0, 0.5723437, 0.83826864, 0.41960785)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_2unnq")
+
+[node name="HitboxArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="Hitbox" type="CollisionShape2D" parent="HitboxArea"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_81a2j")
+debug_color = Color(0.9971213, 0, 0.18230766, 0.41960785)
+
+[node name="Particles" type="Node2D" parent="."]
+
+[node name="wood1" type="GPUParticles2D" parent="Particles"]
+emitting = false
+amount = 16
+texture = ExtResource("2_3siyj")
+lifetime = 0.8
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_iqm4h")
+
+[node name="wood2" type="GPUParticles2D" parent="Particles"]
+emitting = false
+texture = ExtResource("3_2unnq")
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_fusc2")
+
+[node name="metal" type="GPUParticles2D" parent="Particles"]
+emitting = false
+amount = 7
+texture = ExtResource("4_fusc2")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_s3vss")
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="BarrelBreak1" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("6_mm2nh")
+
+[node name="BarrelBreak2" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("7_2xfme")
+
+[node name="BarrelBreak3" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("8_jnmep")
+
+[node name="BarrelBreak4" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("9_p4kj5")
+
+[node name="BarrelBreak5" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("10_15atg")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_delete_timeout"]

@@ -1,10 +1,11 @@
 extends AnimatedSprite2D
 
-var it: int = 0
+var it: int = randi_range(0, 3)
 
 @onready var light: PointLight2D = $Light
 
 func _ready() -> void:
+	frame = it
 	play("default")
 
 func _on_flicker_timer_timeout() -> void:
