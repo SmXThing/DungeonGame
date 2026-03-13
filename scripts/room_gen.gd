@@ -103,7 +103,7 @@ func _process(_delta: float) -> void:
 	if Input.is_action_pressed("CTRL"): 
 		if Input.is_action_pressed("ui_up"):
 			$Camera2D.zoom += 0.01 * Vector2(1, 1)
-		elif Input.is_action_pressed("ui_down") && $Camera2D.zoom.x > 0.01:
+		elif Input.is_action_pressed("ui_down") && $Camera2D.zoom.x > 0.05:
 			$Camera2D.zoom -= 0.01 * Vector2(1, 1)
 		if Input.is_action_just_pressed("ENTER"):
 			$DirectionalLight2D.visible = !$DirectionalLight2D.visible
@@ -248,11 +248,20 @@ func add_room_data(root_cell: Vector2i) -> void:
 					path += str(rotations)
 					room_name += str(rotations) + "_"
 	elif connections == 4:
-		path += "center/"
+		path += "center"
 		room_name += "0_"
 	
+	if root_cell == starting_room_cell:
+		path += "/start/"
+		room_name += "1"
+	elif root_cell == boss_room_cell:
+		path += "/boss/"
+		room_name += "2"
+	else:
+		room_name += "0"
+	
 	var variation: int = randi_range(1, globals.get_num_files(path, "tscn"))
-	room_name += "0" + str(variation) + ".tscn"
+	room_name += str(variation) + ".tscn"
 	
 	room_file_paths.append(path)
 	room_names.append(room_name)

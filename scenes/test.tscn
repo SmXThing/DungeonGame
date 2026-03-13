@@ -6,12 +6,9 @@
 [node name="Node2D" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_wen4y")
-length = 25
-depth = 30
 
 [node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
-zoom = Vector2(0.05, 0.05)
+zoom = Vector2(0.1, 0.1)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 visible = false
