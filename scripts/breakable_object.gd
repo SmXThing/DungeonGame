@@ -8,11 +8,11 @@ class_name BreakableObject
 @export var sfx: Node2D
 @export var deletion_timer: Timer
 
-func _ready() -> void:
-	pass
-
 func break_object() -> void:
-	sfx.get_children()[randi_range(0, len(sfx.get_children()) - 1)].play()
+	var sound: AudioStreamPlayer2D = sfx.get_children()[randi_range(0, len(sfx.get_children()) - 1)]
+	sound.pitch_scale += randf_range(-0.2, 0.2)
+	sound.play()
+	
 	if hitbox:
 		hitbox.queue_free()
 	if collision:

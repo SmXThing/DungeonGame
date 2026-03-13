@@ -76,7 +76,9 @@ func _ready() -> void:
 		var room_scene: PackedScene = load(room_file_paths[index] + "/" + room_names[index])
 		
 		var room:= room_scene.instantiate()
-		room.global_position = to_actual(cell_positions[index])
+		room.cell = cell_positions[index]
+		room.global_position = to_actual(room.cell)
+		
 		
 		if cell_positions[index] == starting_room_cell || cell_positions[index] == boss_room_cell:
 			room.modulate = Color.GREEN

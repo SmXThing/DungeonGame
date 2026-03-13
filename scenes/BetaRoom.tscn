@@ -405,13 +405,11 @@ tile_map_data = PackedByteArray("AAADAAAAAQAAAAAAAQANAAAAAQAAAAAAAQANAAQAAQAAAAA
 tile_set = SubResource("TileSet_50b3t")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-visible = false
 color = Color(0.9652651, 0.91662264, 0.87224925, 1)
 energy = 1.05
 blend_mode = 1
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_pvo8e")]
-y_sort_enabled = true
 position = Vector2(106, 94)
 
 [node name="Enemy" parent="." instance=ExtResource("4_fmiwc")]
