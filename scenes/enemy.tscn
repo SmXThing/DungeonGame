@@ -1,17 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://dt4pxv50d0h5h"]
 
-[ext_resource type="Script" uid="uid://122d4gaof7sl" path="res://enemy.gd" id="1_md0e3"]
+[ext_resource type="Script" uid="uid://122d4gaof7sl" path="res://scripts/enemy.gd" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://o4arua2neas6" path="res://icon.svg" id="2_4ra3w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
-size = Vector2(8, 4)
+size = Vector2(8, 8)
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_md0e3")
 speed = 30.0
 attack_range = 12.0
-detection_range = 50.0
+detection_range = 128.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -1.4901161e-08)
@@ -20,3 +20,7 @@ texture = ExtResource("2_4ra3w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5uy6h")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="RayCast" type="RayCast2D" parent="."]
