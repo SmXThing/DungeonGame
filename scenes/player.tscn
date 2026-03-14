@@ -1,10 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://ce7odlbtah125"]
+[gd_scene load_steps=21 format=3 uid="uid://ce7odlbtah125"]
 
 [ext_resource type="Texture2D" uid="uid://bjwkhlkc4in1k" path="res://assets/swordguy.png" id="1_p0vlq"]
 [ext_resource type="Script" uid="uid://cda7qx3icmv63" path="res://scripts/swordsman.gd" id="2_v6fml"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0vlq"]
-size = Vector2(9, 4)
+size = Vector2(12, 4)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v6fml"]
 atlas = ExtResource("1_p0vlq")
@@ -123,13 +123,21 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_v6fml"]
 gradient = SubResource("Gradient_p0vlq")
-width = 192
-height = 192
+width = 128
+height = 128
 fill = 1
 fill_from = Vector2(0.5, 0.47196263)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_bar", "camera", "sprites")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
+size = Vector2(12, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
+size = Vector2(20, 24)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_bar", "camera", "sprites", "light")]
+y_sort_enabled = true
 collision_layer = 2
+collision_mask = 17
 script = ExtResource("2_v6fml")
 movement_speed = 100.0
 player_health = 150
@@ -137,9 +145,10 @@ player_class = "swordsman"
 health_bar = NodePath("Healthbar")
 camera = NodePath("Camera2D")
 sprites = NodePath("Sprites")
+light = NodePath("PointLight2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 6)
+position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_p0vlq")
 debug_color = Color(0.27099976, 0.5020223, 1, 0.41960785)
 
@@ -149,7 +158,7 @@ animation = &"new_animation_1"
 frame_progress = 0.21618274
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(1, 0.6261644, 0.34932932, 1)
+color = Color(0.9934314, 0.6432652, 7.70092e-07, 1)
 energy = 1.16
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_v6fml")
@@ -159,6 +168,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.25, 0.25)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -167,3 +177,21 @@ layer = -1
 offset_right = 288.0
 offset_bottom = 160.0
 color = Color(0, 0, 0, 1)
+
+[node name="RoomTriggerDetection" type="Area2D" parent="." groups=["Player"]]
+collision_layer = 2
+collision_mask = 512
+
+[node name="DetectionBox" type="CollisionShape2D" parent="RoomTriggerDetection"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_g2els")
+
+[node name="AttackPlaceholder" type="Area2D" parent="." groups=["PlayerAttack"]]
+collision_layer = 32
+collision_mask = 0
+
+[node name="Attack" type="CollisionShape2D" parent="AttackPlaceholder"]
+shape = SubResource("RectangleShape2D_qhqgy")
+debug_color = Color(0.9627866, 0.19569221, 7.70092e-07, 0.41960785)
+
+[connection signal="area_entered" from="RoomTriggerDetection" to="." method="_on_detection_area_entered"]

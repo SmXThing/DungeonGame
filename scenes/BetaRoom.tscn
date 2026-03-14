@@ -413,7 +413,6 @@ energy = 1.05
 blend_mode = 1
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_pvo8e")]
-y_sort_enabled = true
 position = Vector2(106, 94)
 
 [node name="Enemy" parent="." instance=ExtResource("4_fmiwc")]

@@ -7,6 +7,7 @@
 size = Vector2(8, 8)
 
 [node name="Enemy" type="CharacterBody2D"]
+y_sort_enabled = true
 collision_layer = 4
 script = ExtResource("1_md0e3")
 speed = 30.0

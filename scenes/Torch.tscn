@@ -3,6 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://5waua11k71iy" path="res://assets/tiles.png" id="1_hbdl4"]
 [ext_resource type="Script" uid="uid://cr2tlmxdb6l8q" path="res://scripts/torch.gd" id="2_dw1iy"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_k33h7"]
+atlas = ExtResource("1_hbdl4")
+region = Rect2(32, 96, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_dw1iy"]
 atlas = ExtResource("1_hbdl4")
 region = Rect2(0, 96, 16, 16)
@@ -10,10 +14,6 @@ region = Rect2(0, 96, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_uhawq"]
 atlas = ExtResource("1_hbdl4")
 region = Rect2(16, 96, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k33h7"]
-atlas = ExtResource("1_hbdl4")
-region = Rect2(32, 96, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8mhhh"]
 atlas = ExtResource("1_hbdl4")
@@ -23,20 +23,20 @@ region = Rect2(48, 96, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_k33h7")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_dw1iy")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uhawq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_k33h7")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_8mhhh")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 4.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_djai8"]
@@ -45,15 +45,23 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_g2t0v"]
 gradient = SubResource("Gradient_djai8")
+width = 96
+height = 96
 fill = 1
 fill_from = Vector2(0.5046729, 0.4813084)
 
 [node name="Torch" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_bma1w")
-frame_progress = 0.08440797
+frame_progress = 0.24504837
 script = ExtResource("2_dw1iy")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(0.9999997, 0.66654414, 0.30486086, 1)
+[node name="Light" type="PointLight2D" parent="."]
+color = Color(0.92013043, 0.7214268, 1.1551381e-06, 1)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_g2t0v")
+
+[node name="FlickerTimer" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[connection signal="timeout" from="FlickerTimer" to="." method="_on_flicker_timer_timeout"]
