@@ -574,16 +574,16 @@ sources/0 = SubResource("TileSetAtlasSource_uadj8")
 size = Vector2(272, 144)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xqvw2"]
-size = Vector2(61.5, 23)
+size = Vector2(61.5, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pjq4h"]
-size = Vector2(24, 64)
+size = Vector2(32, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5b0sx"]
-size = Vector2(64, 24)
+size = Vector2(64, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uadj8"]
-size = Vector2(24, 64)
+size = Vector2(32, 64)
 
 [node name="Room" type="Node2D"]
 y_sort_enabled = true
@@ -625,9 +625,6 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_rnsln")
 debug_color = Color(0.31147367, 0.4920128, 1, 0.41960785)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
-rect = Rect2(-144, -80, 288, 160)
-
 [node name="DirectionSensors" type="Node2D" parent="."]
 
 [node name="TopArea" type="Area2D" parent="DirectionSensors"]
@@ -635,7 +632,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="TopBox" type="CollisionShape2D" parent="DirectionSensors/TopArea"]
-position = Vector2(1.25, -59.5)
+position = Vector2(1.25, -64)
 shape = SubResource("RectangleShape2D_xqvw2")
 debug_color = Color(0.98777086, 0, 0.3144544, 0.41960785)
 
@@ -644,7 +641,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="RightBox" type="CollisionShape2D" parent="DirectionSensors/RightArea"]
-position = Vector2(124, 0)
+position = Vector2(128, 0)
 shape = SubResource("RectangleShape2D_pjq4h")
 debug_color = Color(0.9882353, 0, 0.3137255, 0.41960785)
 
@@ -653,7 +650,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="BottomBox" type="CollisionShape2D" parent="DirectionSensors/BottomArea"]
-position = Vector2(0, 60)
+position = Vector2(0, 64)
 shape = SubResource("RectangleShape2D_5b0sx")
 debug_color = Color(0.9882353, 0, 0.3137255, 0.41960785)
 
@@ -662,6 +659,9 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="LeftBox" type="CollisionShape2D" parent="DirectionSensors/LeftArea"]
-position = Vector2(-124, 0)
+position = Vector2(-128, 0)
 shape = SubResource("RectangleShape2D_uadj8")
 debug_color = Color(0.9882353, 0, 0.3137255, 0.41960785)
+
+[connection signal="area_entered" from="PlayerDetectionArea" to="." method="_on_detection_entered"]
+[connection signal="area_exited" from="PlayerDetectionArea" to="." method="_on_detection_exited"]

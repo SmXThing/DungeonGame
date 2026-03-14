@@ -68,4 +68,4 @@ func add_item_to_inventory(item: Item) -> bool:
 
 func _on_detection_area_entered(area: Area2D) -> void:
 	if area.is_in_group("RoomTransition") && enable_camera_limit:
-		camera_translation(area.get_parent().get_cell_pos(), 2.0)
+		camera_translation(area.get_parent().get_cell_pos(), 1.5)

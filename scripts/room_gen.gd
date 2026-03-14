@@ -9,6 +9,8 @@ Room Gen Tips:
 ##Number of rooms that can generate additional paths. Creates the branches of the dungeon.
 @export_range(0, 1000) var depth: int = 15
 @export var camera_speed: int = 10
+@export var load_all: bool = false
+var enable_room_loading: bool = true
 var var_camera_speed: int
 
 var room_test: PackedScene = preload("res://scenes/TestRoom.tscn")
@@ -21,18 +23,13 @@ var room_directions: Array[Array] = []
 var room_file_paths: Array[String] = []
 var room_names: Array[String] = []
 
+var room_scenes: Dictionary[Vector2i, Room] = {}
+
 var blocked_cells: Array[Vector2i] = []
 
 var starting_room_cell: Vector2i
 var boss_room_cell: Vector2i
 var max_cells_remaining = depth
-
-const directions: Array[Vector2i] = [
-	Vector2i.UP,
-	Vector2i.RIGHT,
-	Vector2i.DOWN,
-	Vector2i.LEFT
-]
 
 func _ready() -> void:
 	var_camera_speed = camera_speed
@@ -59,32 +56,35 @@ func _ready() -> void:
 	for cell in cell_positions:
 		add_room_data(cell)
 		add_data_line(cell_positions[index], room_connections[index], room_directions[index], room_file_paths[index], room_names[index])
-		
-		'''var room_instance: TextureRect = room_test.instantiate()
-		room_instance.global_position = to_actual(cell)
-		room_instance.texture = load(room_file_paths[index])
-		
-		if cell == starting_room_cell || cell == boss_room_cell:
-			room_instance.modulate = Color.RED
-		add_child(room_instance)'''
 		index += 1
 	
 	index = 0
 	
 	for line in map_data:
+		var path: String = room_file_paths[index] + "/" + room_names[index]
+		
 		print(room_file_paths[index] + "/" + room_names[index])
-		var room_scene: PackedScene = load(room_file_paths[index] + "/" + room_names[index])
+		print(room_directions[index])
 		
-		var room:= room_scene.instantiate()
+		var room_scene: PackedScene = load(path)
+		var room: Room = room_scene.instantiate()
 		room.cell = cell_positions[index]
+		for dir in room_directions[index]:
+			room.connected_cells.append(room.cell + dir)
 		room.global_position = to_actual(room.cell)
-		
-		
+		room.scene_path = path
 		if cell_positions[index] == starting_room_cell || cell_positions[index] == boss_room_cell:
 			room.modulate = Color.GREEN
 		
-		add_child(room)
+		room_scenes[cell_positions[index]] = room
 		index += 1
+	
+	if load_all:
+		for room in room_scenes.keys():
+			load_room(room)
+		enable_room_loading = false
+	else:
+		load_room(starting_room_cell)
 	
 	print(str(len(cell_positions)) + " rooms in total!")
 
@@ -127,7 +127,7 @@ func initialize_path() -> void:
 		
 		var loop: bool = false
 		
-		for dir in directions:
+		for dir in globals.directions:
 			if check_validity(last_cell + dir):
 				loop = true
 		
@@ -136,13 +136,13 @@ func initialize_path() -> void:
 			cell_positions.remove_at(-1)
 		else:
 			while loop:
-				new_cell = last_cell + directions[randi_range(0, len(directions) - 1)]
+				new_cell = last_cell + globals.directions[randi_range(0, len(globals.directions) - 1)]
 				if new_cell not in cell_positions && check_validity(new_cell):
 					cell_positions.append(new_cell)
 					loop = false
 
 func check_valid_occupancy(cell: Vector2i, root: Vector2i, ignore: Vector2i) -> bool:
-	for dir in directions:
+	for dir in globals.directions:
 		if cell + dir in cell_positions && cell + dir != root:
 			if dir == ignore && randi_range(1, 2) == 2 && cell + dir != boss_room_cell:
 				continue
@@ -151,7 +151,7 @@ func check_valid_occupancy(cell: Vector2i, root: Vector2i, ignore: Vector2i) -> 
 	return true
 
 func check_adjacent_tiles(cell: Vector2i) -> bool:
-	for dir in directions:
+	for dir in globals.directions:
 		if cell + dir in cell_positions && cell + dir != cell_positions[-1]:
 			return true
 	return false
@@ -161,7 +161,7 @@ func check_validity(cell: Vector2i) -> bool:
 
 func get_available_cells(cell: Vector2i) -> Array[Vector2i]:
 	var cells: Array[Vector2i] = []
-	for dir in directions:
+	for dir in globals.directions:
 		if cell + dir not in cell_positions:
 			if check_valid_occupancy(cell + dir, cell, dir):
 				cells.append(cell + dir)
@@ -184,7 +184,7 @@ func generate_cells(root_cell: Vector2i) -> void:
 
 func add_room_data(root_cell: Vector2i) -> void:
 	'''
-	Directions:
+	globals.directions:
 		4 - Ignore, Only 1 Orientation
 		3 - UP, RIGHT, DOWN [(0, -1), (1, 0), (0, 1)]
 		2(Straight) - [(0, -1), (0, 1)]
@@ -199,7 +199,7 @@ func add_room_data(root_cell: Vector2i) -> void:
 	var path: String = "res://rooms/"
 	var room_name: String = "room_"
 	
-	for dir in directions:
+	for dir in globals.directions:
 		if root_cell + dir in cell_positions:
 			connections += 1
 			connected_directions.append(dir)
@@ -211,7 +211,7 @@ func add_room_data(root_cell: Vector2i) -> void:
 	room_directions.append(connected_directions)
 	
 	if connections == 1:
-		for dir in directions:
+		for dir in globals.directions:
 			if connected_directions[0] == dir:
 				path += str(rotations)
 				room_name += str(rotations) + "_"
@@ -269,3 +269,31 @@ func add_room_data(root_cell: Vector2i) -> void:
 func add_data_line(cell: Vector2i, connects: int, dirs: Array, path: String, room_name: String) -> void:
 	var data: Array = [cell, connects, dirs, path, room_name]
 	map_data.append(data)
+
+func load_room(cell: Vector2i) -> void:
+	if enable_room_loading:
+		call_deferred("add_child", room_scenes[cell])
+
+func unload_room(cell: Vector2i) -> void:
+	if enable_room_loading:
+		var room_copy: Room = copy_room(room_scenes[cell])
+		room_scenes[cell].queue_free()
+		room_scenes[cell] = room_copy
+
+func copy_room(room: Room) -> Room:
+	var root_scene: PackedScene = load(room.get_scene_path())
+	var updated_room: Room = root_scene.instantiate()
+	updated_room.cell = room.cell
+	for cell in room.connected_cells:
+		updated_room.connected_cells.append(cell)
+	updated_room.global_position = to_actual(room.get_cell_pos())
+	updated_room.scene_path = room.get_scene_path()
+	if room.get_cell_pos() == starting_room_cell || room.get_cell_pos() == boss_room_cell:
+		updated_room.modulate = Color.GREEN
+	
+	return updated_room
+
+func display_room_info() -> void:
+	print("----------------------------------------------------------------")
+	for room in room_scenes.keys():
+		print("(Type: " + str(room_scenes[room].get_class()) + ") " + "Key: " + str(room) + "Actual Cell: " + str(room_scenes[room].cell) + " - Path: " + room_scenes[room].get_scene_path() + " - Adjacent Cells: " + str(room_scenes[room].connected_cells))
