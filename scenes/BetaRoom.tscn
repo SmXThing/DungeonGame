@@ -1,9 +1,11 @@
-[gd_scene load_steps=30 format=4 uid="uid://cy60vhecxulp6"]
+[gd_scene load_steps=32 format=4 uid="uid://cy60vhecxulp6"]
 
 [ext_resource type="Texture2D" uid="uid://5waua11k71iy" path="res://assets/tiles.png" id="1_fiywq"]
 [ext_resource type="PackedScene" uid="uid://drkl1ct2gk2mu" path="res://scenes/Torch.tscn" id="2_3x34p"]
 [ext_resource type="PackedScene" uid="uid://ce7odlbtah125" path="res://scenes/player.tscn" id="2_pvo8e"]
 [ext_resource type="PackedScene" uid="uid://dt4pxv50d0h5h" path="res://scenes/enemy.tscn" id="4_fmiwc"]
+[ext_resource type="PackedScene" uid="uid://div2ihotq0ama" path="res://scenes/enemy_fast.tscn" id="5_50b3t"]
+[ext_resource type="PackedScene" uid="uid://b4u30i1cwiboe" path="res://scenes/enemy_tank.tscn" id="6_t5gph"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3x34p"]
 texture = ExtResource("1_fiywq")
@@ -405,6 +407,7 @@ tile_map_data = PackedByteArray("AAADAAAAAQAAAAAAAQANAAAAAQAAAAAAAQANAAQAAQAAAAA
 tile_set = SubResource("TileSet_50b3t")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
 color = Color(0.9652651, 0.91662264, 0.87224925, 1)
 energy = 1.05
 blend_mode = 1
@@ -413,13 +416,10 @@ blend_mode = 1
 position = Vector2(106, 94)
 
 [node name="Enemy" parent="." instance=ExtResource("4_fmiwc")]
-position = Vector2(151, 147)
+position = Vector2(65, 52)
 
-[node name="Enemy2" parent="." instance=ExtResource("4_fmiwc")]
-position = Vector2(229, 210)
+[node name="Enemy2" parent="." instance=ExtResource("5_50b3t")]
+position = Vector2(111, 43)
 
-[node name="Enemy3" parent="." instance=ExtResource("4_fmiwc")]
-position = Vector2(35, 39)
-
-[node name="Enemy4" parent="." instance=ExtResource("4_fmiwc")]
-position = Vector2(65, 220)
+[node name="Enemy3" parent="." instance=ExtResource("6_t5gph")]
+position = Vector2(123, 129)

@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://dt4pxv50d0h5h"]
 
-[ext_resource type="Script" uid="uid://122d4gaof7sl" path="res://enemy.gd" id="1_md0e3"]
+[ext_resource type="Script" uid="uid://122d4gaof7sl" path="res://scripts/enemy.gd" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://o4arua2neas6" path="res://icon.svg" id="2_4ra3w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
-size = Vector2(8, 4)
+size = Vector2(8, 8)
 
 [node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -21,3 +21,7 @@ texture = ExtResource("2_4ra3w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5uy6h")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="RayCast" type="RayCast2D" parent="."]
