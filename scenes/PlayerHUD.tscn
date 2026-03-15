@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://6icmhagwoosm"]
+
+[ext_resource type="PackedScene" uid="uid://daeo6xts588xk" path="res://scenes/MiniMap.tscn" id="1_0kcyj"]
+[ext_resource type="Script" uid="uid://cdrn8upp6d12j" path="res://scripts/player_hud.gd" id="1_uhx4l"]
+[ext_resource type="PackedScene" uid="uid://gkegrgxigfue" path="res://scenes/Map.tscn" id="2_fjqji"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_uhx4l")
+
+[node name="Map" parent="." instance=ExtResource("2_fjqji")]
+visible = false
+
+[node name="MiniMap" parent="." instance=ExtResource("1_0kcyj")]
+position = Vector2(208, 8)
+scale = Vector2(0.25, 0.25)

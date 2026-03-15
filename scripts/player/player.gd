@@ -12,6 +12,7 @@ signal player_killed
 @export var sprites: AnimatedSprite2D
 @export var light: PointLight2D
 @export var enable_camera_limit: bool = false
+@export var HUD: CanvasLayer
 
 const sprint_multiplier: float = 1.5
 
@@ -67,5 +68,10 @@ func add_item_to_inventory(item: Item) -> bool:
 		return false
 
 func _on_detection_area_entered(area: Area2D) -> void:
-	if area.is_in_group("RoomTransition") && enable_camera_limit:
-		camera_translation(area.get_parent().get_cell_pos(), 1.5)
+	if area.is_in_group("RoomTransition"):
+		var room: Room = area.get_parent()
+		if !room.traversed:
+			room.traversed = true
+			HUD.minimap.update_map(room)
+		if enable_camera_limit:
+			camera_translation(room.cell, 1.5)

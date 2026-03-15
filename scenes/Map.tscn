@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://gkegrgxigfue"]
+
+[ext_resource type="Texture2D" uid="uid://yhfy2hhcpiwh" path="res://rooms/1/0/room.png" id="1_5hauk"]
+
+[node name="Map" type="PanelContainer"]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 276.0
+offset_bottom = 148.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(264, 136)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_5hauk")

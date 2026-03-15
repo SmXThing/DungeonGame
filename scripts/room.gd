@@ -8,6 +8,7 @@ var connected_cells: Array[Vector2i]
 var has_chest: bool
 var chest_opened: bool
 var scene_path: String
+var traversed: bool = false
 
 func _ready() -> void:
 	for node in $DirectionSensors.get_children():

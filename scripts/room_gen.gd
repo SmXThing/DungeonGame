@@ -9,6 +9,7 @@ Room Gen Tips:
 ##Number of rooms that can generate additional paths. Creates the branches of the dungeon.
 @export_range(0, 1000) var depth: int = 15
 @export var camera_speed: int = 10
+##Loads all rooms in the scene. (WARNING: Should only be enabled for smaller dungeons as larger dungeons can cause severe lag!)
 @export var load_all: bool = false
 var enable_room_loading: bool = true
 var var_camera_speed: int
@@ -288,6 +289,7 @@ func copy_room(room: Room) -> Room:
 		updated_room.connected_cells.append(cell)
 	updated_room.global_position = to_actual(room.get_cell_pos())
 	updated_room.scene_path = room.get_scene_path()
+	updated_room.traversed = room.traversed
 	if room.get_cell_pos() == starting_room_cell || room.get_cell_pos() == boss_room_cell:
 		updated_room.modulate = Color.GREEN
 	

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv6e8enib0iyg"]
+
+[ext_resource type="Texture2D" uid="uid://c6v5720fqyqle" path="res://assets/dot.png" id="1_gwrym"]
+[ext_resource type="Texture2D" uid="uid://dritlqq30407k" path="res://assets/circle.png" id="1_j5ybm"]
+[ext_resource type="Script" uid="uid://dry5mxnj4uvu5" path="res://scripts/dot_icon.gd" id="2_pfqdm"]
+
+[node name="Icon" type="Sprite2D" node_paths=PackedStringArray("pulse", "pulse_timer")]
+texture = ExtResource("1_gwrym")
+script = ExtResource("2_pfqdm")
+pulse_scale = 2.0
+pulse = NodePath("Pulse")
+pulse_timer = NodePath("PulseTimer")
+
+[node name="Pulse" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_j5ybm")
+
+[node name="PulseTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="PulseTimer" to="." method="_on_pulse_timeout"]

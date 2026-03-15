@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://daeo6xts588xk"]
+
+[ext_resource type="Script" uid="uid://bv300c28o02pg" path="res://scripts/mini_map.gd" id="1_ibfje"]
+[ext_resource type="Texture2D" uid="uid://c1wnsvykjhwln" path="res://assets/MapPlaceholder.png" id="2_7l8y8"]
+[ext_resource type="Texture2D" uid="uid://bswaq8ci20dt2" path="res://assets/mini_map_border.png" id="3_7l8y8"]
+[ext_resource type="PackedScene" uid="uid://dv6e8enib0iyg" path="res://scenes/DotIcon.tscn" id="4_x12ef"]
+
+[node name="MiniMap" type="Node2D"]
+script = ExtResource("1_ibfje")
+
+[node name="MapElements" type="Node2D" parent="."]
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="MapElements"]
+offset_right = 288.0
+offset_bottom = 162.0
+stretch = true
+
+[node name="MapViewport" type="SubViewport" parent="MapElements/ViewportContainer"]
+handle_input_locally = false
+size = Vector2i(288, 162)
+render_target_update_mode = 4
+
+[node name="Graphics" type="Node2D" parent="MapElements/ViewportContainer/MapViewport"]
+
+[node name="Placeholder" type="Sprite2D" parent="MapElements/ViewportContainer/MapViewport/Graphics"]
+position = Vector2(144, 80)
+texture = ExtResource("2_7l8y8")
+
+[node name="Origin" type="Marker2D" parent="MapElements/ViewportContainer/MapViewport/Graphics"]
+position = Vector2(144, 80)
+
+[node name="Border" type="TextureRect" parent="."]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 300.0
+offset_bottom = 172.0
+texture = ExtResource("3_7l8y8")
+
+[node name="Icon" parent="." instance=ExtResource("4_x12ef")]
+position = Vector2(144, 80)
+scale = Vector2(0.5, 0.5)
+color = Color(3.3691526e-06, 0.76382864, 0.03305928, 1)
