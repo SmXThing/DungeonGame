@@ -28,6 +28,7 @@ var patrol_direction = Vector2(1, 0)
 var attack_timer: float = 0.0
 var patrol_timer: float = 1.0
 var is_patrol_moving: bool = true
+var wall_stop_timer: float = 0.0
 
 # reference to the RayCast2D child node
 @onready var ray: RayCast2D = $RayCast
@@ -65,6 +66,7 @@ func idle_state() -> void:
 func patrol_state() -> void:
 	patrol_timer -= get_physics_process_delta_time()
 
+	# switch between moving and stopping
 	if patrol_timer <= 0.0:
 		is_patrol_moving = not is_patrol_moving
 		if is_patrol_moving:
@@ -73,18 +75,33 @@ func patrol_state() -> void:
 		else:
 			patrol_timer = randf_range(min_stop_time, max_stop_time)
 
-	if is_patrol_moving:
-		velocity = patrol_direction * speed
-		if is_on_wall():
-			patrol_direction.x *= -1
-		if get_slide_collision_count() > 0:
-			patrol_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
+	# if recently paused due to wall, count down
+	if wall_stop_timer > 0.0:
+		wall_stop_timer -= get_physics_process_delta_time()
+		velocity = Vector2.ZERO
+
+	elif is_patrol_moving:
+		# point the RayCast in the patrol direction
+		ray.target_position = patrol_direction * 0.5  # adjust
+		ray.force_raycast_update()
+
+		# if ray sees a wall ahead, pick a new direction
+		if ray.is_colliding():
+			wall_stop_timer = 0.4
+			velocity = Vector2.ZERO
+
+			# pick a new random direction
+			patrol_direction = Vector2(randf_range(-1,1), randf_range(-1,1)).normalized()
+
+		# move in patrol direction
+		else:
+			velocity = patrol_direction * speed
+
 	else:
 		velocity = Vector2.ZERO
 
-	if player == null:
-		return
-	if global_position.distance_to(player.global_position) < detection_range and can_see_player():
+	# detect player
+	if player != null and global_position.distance_to(player.global_position) < detection_range and can_see_player():
 		state = State.CHASE
 
 # chase state
