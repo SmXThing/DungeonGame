@@ -1,14 +1,16 @@
 extends Node
 class_name State
 
-##States that can be activated from root state
-@export var connected_states: Array[Node] = []
-##Animation(s) that is/are tied to this state
-@export var animations: Array[String] = []
-var active: bool = false
+signal transitioned
 
-func trigger() -> void:
-	active = true
+func update(delta: float) -> void:
+	pass
 
-func exit_state() -> void:
-	active = false
+func physics_update(delta: float) -> void:
+	pass
+
+func enter() -> void:
+	pass
+
+func exit() -> void:
+	pass

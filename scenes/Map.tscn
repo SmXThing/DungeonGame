@@ -1,23 +1,47 @@
-[gd_scene load_steps=2 format=3 uid="uid://gkegrgxigfue"]
+[gd_scene load_steps=4 format=3 uid="uid://gkegrgxigfue"]
 
-[ext_resource type="Texture2D" uid="uid://yhfy2hhcpiwh" path="res://rooms/1/0/room.png" id="1_5hauk"]
+[ext_resource type="Script" uid="uid://dkqmnpllc7xkq" path="res://scripts/player_map.gd" id="1_lajc7"]
+[ext_resource type="Texture2D" uid="uid://bswaq8ci20dt2" path="res://assets/mini_map_border.png" id="2_lajc7"]
+[ext_resource type="PackedScene" uid="uid://dv6e8enib0iyg" path="res://scenes/DotIcon.tscn" id="2_xkm8s"]
 
-[node name="Map" type="PanelContainer"]
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 276.0
-offset_bottom = 148.0
+[node name="Map" type="Node2D" node_paths=PackedStringArray("camera", "player_icon", "map", "origin_marker")]
+process_mode = 3
+script = ExtResource("1_lajc7")
+camera = NodePath("ViewportContainer/MapViewport/SubCamera")
+player_icon = NodePath("ViewportContainer/MapViewport/Graphics/Icon")
+traversed_path_graphic = "res://assets/MapPlaceholder.png"
+adjacent_path_graphic = "res://assets/MapPlaceholder2.png"
+map = NodePath("ViewportContainer/MapViewport/Graphics")
+origin_marker = NodePath("ViewportContainer/MapViewport/Graphics/Origin")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-layout_mode = 2
+[node name="ViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 288.0
+offset_bottom = 162.0
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="MapViewport" type="SubViewport" parent="ViewportContainer"]
 handle_input_locally = false
-size = Vector2i(264, 136)
+canvas_item_default_texture_filter = 0
+size = Vector2i(288, 162)
 render_target_update_mode = 4
 
-[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport"]
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("1_5hauk")
+[node name="SubCamera" type="Camera2D" parent="ViewportContainer/MapViewport"]
+position = Vector2(144, 80)
+scale = Vector2(0.1, 0.1)
+
+[node name="Graphics" type="Node2D" parent="ViewportContainer/MapViewport"]
+
+[node name="Origin" type="Marker2D" parent="ViewportContainer/MapViewport/Graphics"]
+
+[node name="Icon" parent="ViewportContainer/MapViewport/Graphics" instance=ExtResource("2_xkm8s")]
+z_index = 5
+position = Vector2(144, 80)
+
+[node name="MapElements" type="Node2D" parent="."]
+
+[node name="Border" type="TextureRect" parent="."]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 300.0
+offset_bottom = 172.0
+texture = ExtResource("2_lajc7")

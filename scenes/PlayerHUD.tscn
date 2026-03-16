@@ -7,9 +7,11 @@
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_uhx4l")
 
-[node name="Map" parent="." instance=ExtResource("2_fjqji")]
-visible = false
-
 [node name="MiniMap" parent="." instance=ExtResource("1_0kcyj")]
 position = Vector2(208, 8)
 scale = Vector2(0.25, 0.25)
+
+[node name="Map" parent="." instance=ExtResource("2_fjqji")]
+modulate = Color(1, 1, 1, 0.7019608)
+position = Vector2(30, 16)
+scale = Vector2(0.8, 0.8)

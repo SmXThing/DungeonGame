@@ -1,10 +1,4 @@
-extends Node2D
-
-@onready var player = get_parent().player
-@onready var map: Node2D = $MapElements/ViewportContainer/MapViewport/Graphics
-@onready var origin_marker = $MapElements/ViewportContainer/MapViewport/Graphics/Origin
-
-var visible_rooms: Dictionary[Vector2i, bool] = {}
+extends Map
 
 func _ready() -> void:
 	if !player:
@@ -16,9 +10,6 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("TAB"):
 		visible = !visible
 
-func to_relative(cell: Vector2i) -> Vector2i:
-	return cell * Vector2i(get_viewport_rect().size) / 2
-
 func update_map(room: Room) -> void:
 	visible_rooms[room.cell] = room.traversed
 	
@@ -29,8 +20,8 @@ func update_map(room: Room) -> void:
 	for node in visible_rooms.keys():
 		var graphic: Sprite2D = Sprite2D.new()
 		if visible_rooms[node]:
-			graphic.texture = load("res://assets/MapPlaceholder.png")
+			graphic.texture = load(traversed_path_graphic)
 		else:
-			graphic.texture = load("res://assets/MapPlaceholder2.png")
+			graphic.texture = load(adjacent_path_graphic)
 		graphic.position = origin_marker.position + Vector2(to_relative(node))
 		map.add_child(graphic)

@@ -1,12 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://daeo6xts588xk"]
+[gd_scene load_steps=4 format=3 uid="uid://daeo6xts588xk"]
 
 [ext_resource type="Script" uid="uid://bv300c28o02pg" path="res://scripts/mini_map.gd" id="1_ibfje"]
-[ext_resource type="Texture2D" uid="uid://c1wnsvykjhwln" path="res://assets/MapPlaceholder.png" id="2_7l8y8"]
 [ext_resource type="Texture2D" uid="uid://bswaq8ci20dt2" path="res://assets/mini_map_border.png" id="3_7l8y8"]
 [ext_resource type="PackedScene" uid="uid://dv6e8enib0iyg" path="res://scenes/DotIcon.tscn" id="4_x12ef"]
 
-[node name="MiniMap" type="Node2D"]
+[node name="MiniMap" type="Node2D" node_paths=PackedStringArray("map", "origin_marker")]
 script = ExtResource("1_ibfje")
+traversed_path_graphic = "res://assets/MapPlaceholder.png"
+adjacent_path_graphic = "res://assets/MapPlaceholder2.png"
+map = NodePath("MapElements/ViewportContainer/MapViewport/Graphics")
+origin_marker = NodePath("MapElements/ViewportContainer/MapViewport/Graphics/Origin")
 
 [node name="MapElements" type="Node2D" parent="."]
 
@@ -17,14 +20,11 @@ stretch = true
 
 [node name="MapViewport" type="SubViewport" parent="MapElements/ViewportContainer"]
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 size = Vector2i(288, 162)
 render_target_update_mode = 4
 
 [node name="Graphics" type="Node2D" parent="MapElements/ViewportContainer/MapViewport"]
-
-[node name="Placeholder" type="Sprite2D" parent="MapElements/ViewportContainer/MapViewport/Graphics"]
-position = Vector2(144, 80)
-texture = ExtResource("2_7l8y8")
 
 [node name="Origin" type="Marker2D" parent="MapElements/ViewportContainer/MapViewport/Graphics"]
 position = Vector2(144, 80)

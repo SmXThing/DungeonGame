@@ -1,16 +1,39 @@
 extends Node
 
-@export var player: CharacterBody2D
-@export var sprites: AnimatedSprite2D
-@export var idle_animation: String
-@export var walking_animation: String
-@export var attacking_animation: String
-@export var special_animation: String
+@export var starting_state: State
 
-@onready var idle: State = $idle
-@onready var walking: State = $walking
-@onready var attacking: State = $attacking
-@onready var special: State = $special
+var active_state: State
+var states: Dictionary[String, State] = {}
 
 func _ready() -> void:
-	idle.trigger()
+	for node in get_children():
+		if node is State:
+			states[node.name] = node
+			node.transitioned.connect(_on_state_transitioned)
+	
+	if starting_state:
+		starting_state.enter()
+		active_state = starting_state
+
+func _process(delta: float) -> void:
+	if active_state:
+		active_state.update(delta)
+
+func _physics_process(delta: float) -> void:
+	if active_state:
+		active_state.physics_update(delta)
+
+func _on_state_transitioned(state: State, new_state: String):
+	if state != active_state:
+		print("Line22")
+		return
+	
+	var next_state: State = states[new_state.to_lower()]
+	if !next_state:
+		return
+	
+	if active_state:
+		active_state.exit()
+	
+	next_state.enter()
+	active_state = next_state

@@ -72,6 +72,6 @@ func _on_detection_area_entered(area: Area2D) -> void:
 		var room: Room = area.get_parent()
 		if !room.traversed:
 			room.traversed = true
-			HUD.minimap.update_map(room)
+			HUD.update_maps(room)
 		if enable_camera_limit:
 			camera_translation(room.cell, 1.5)
