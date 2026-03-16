@@ -28,6 +28,7 @@ var patrol_direction = Vector2(1, 0)
 var attack_timer: float = 0.0
 var patrol_timer: float = 1.0
 var is_patrol_moving: bool = true
+var wall_stop_timer: float = 0.0
 
 # reference to the RayCast2D child node
 @onready var ray: RayCast2D = $RayCast
@@ -73,11 +74,15 @@ func patrol_state() -> void:
 		else:
 			patrol_timer = randf_range(min_stop_time, max_stop_time)
 
-	if is_patrol_moving:
+	# if recently hit a wall, count down before moving again to prevent stutter
+	if wall_stop_timer > 0.0:
+		wall_stop_timer -= get_physics_process_delta_time()
+		velocity = Vector2.ZERO
+	elif is_patrol_moving:
 		velocity = patrol_direction * speed
-		if is_on_wall():
-			patrol_direction.x *= -1
-		if get_slide_collision_count() > 0:
+		# on wall collision, stop briefly then picks a new direction
+		if is_on_wall() or get_slide_collision_count() > 0:
+			wall_stop_timer = 2.0
 			patrol_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
 	else:
 		velocity = Vector2.ZERO
