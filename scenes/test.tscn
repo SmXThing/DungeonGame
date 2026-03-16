@@ -21,3 +21,4 @@ blend_mode = 1
 [node name="Player" parent="." instance=ExtResource("2_w8un3")]
 slide_on_ceiling = false
 movement_speed = 300.0
+enable_camera_limit = true
