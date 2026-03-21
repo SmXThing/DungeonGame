@@ -2,11 +2,14 @@ extends Node
 class_name State
 
 signal transitioned
+@export var animation_sprite: AnimatedSprite2D
+@export var machine: Node
+@export var player: CharacterBody2D
 
-func update(delta: float) -> void:
+func update(_delta: float) -> void:
 	pass
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	pass
 
 func enter() -> void:
@@ -14,3 +17,6 @@ func enter() -> void:
 
 func exit() -> void:
 	pass
+
+func emit(new_state: String) -> void:
+	transitioned.emit(self, new_state)

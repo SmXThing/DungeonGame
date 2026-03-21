@@ -1,6 +1,7 @@
 extends Node
 
 @export var starting_state: State
+@export var holder: CharacterBody2D
 
 var active_state: State
 var states: Dictionary[String, State] = {}
@@ -25,7 +26,6 @@ func _physics_process(delta: float) -> void:
 
 func _on_state_transitioned(state: State, new_state: String):
 	if state != active_state:
-		print("Line22")
 		return
 	
 	var next_state: State = states[new_state.to_lower()]
@@ -37,3 +37,9 @@ func _on_state_transitioned(state: State, new_state: String):
 	
 	next_state.enter()
 	active_state = next_state
+
+func get_last_direction() -> Vector2:
+	return holder.facing
+
+func get_holder() -> CharacterBody2D:
+	return holder

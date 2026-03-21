@@ -1,11 +1,13 @@
-extends Node
+extends State
 
+func update(_delta: float) -> void:
+	pass
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func physics_update(_delta: float) -> void:
+	pass
 
+func enter() -> void:
+	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func exit() -> void:
 	pass
