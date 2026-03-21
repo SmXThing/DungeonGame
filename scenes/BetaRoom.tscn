@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://cy60vhecxulp6"]
+[gd_scene load_steps=33 format=4 uid="uid://cy60vhecxulp6"]
 
 [ext_resource type="Texture2D" uid="uid://5waua11k71iy" path="res://assets/tiles.png" id="1_fiywq"]
 [ext_resource type="PackedScene" uid="uid://drkl1ct2gk2mu" path="res://scenes/Torch.tscn" id="2_3x34p"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dt4pxv50d0h5h" path="res://scenes/enemy.tscn" id="4_fmiwc"]
 [ext_resource type="PackedScene" uid="uid://div2ihotq0ama" path="res://scenes/enemy_fast.tscn" id="5_50b3t"]
 [ext_resource type="PackedScene" uid="uid://b4u30i1cwiboe" path="res://scenes/enemy_tank.tscn" id="6_t5gph"]
+[ext_resource type="PackedScene" uid="uid://cfdj4jhu4f0lu" path="res://scenes/inventory_ui.tscn" id="7_bagmn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3x34p"]
 texture = ExtResource("1_fiywq")
@@ -412,8 +413,9 @@ color = Color(0.9652651, 0.91662264, 0.87224925, 1)
 energy = 1.05
 blend_mode = 1
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("2_pvo8e")]
+[node name="Player" parent="." node_paths=PackedStringArray("inventory_ui") groups=["player"] instance=ExtResource("2_pvo8e")]
 position = Vector2(106, 94)
+inventory_ui = NodePath("../InventoryUI")
 
 [node name="Enemy" parent="." instance=ExtResource("4_fmiwc")]
 position = Vector2(65, 52)
@@ -423,3 +425,5 @@ position = Vector2(111, 43)
 
 [node name="Enemy3" parent="." instance=ExtResource("6_t5gph")]
 position = Vector2(123, 129)
+
+[node name="InventoryUI" parent="." instance=ExtResource("7_bagmn")]
