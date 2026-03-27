@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxr2s8p5mqvtq"]
+
+[ext_resource type="Script" uid="uid://d3mq8rdmrcdvk" path="res://fire_projectile.gd" id="1_yx85x"]
+[ext_resource type="Texture2D" uid="uid://dlqew4yhmror5" path="res://assets/FireProjectile.png" id="2_cpwk4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0ohai"]
+radius = 2.9964104
+height = 9.890226
+
+[node name="FireProjectile" type="Area2D"]
+script = ExtResource("1_yx85x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_cpwk4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 7)
+rotation = -1.5755662
+shape = SubResource("CapsuleShape2D_0ohai")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

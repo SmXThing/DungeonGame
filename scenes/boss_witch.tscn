@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://cultb802rt8jl"]
+
+[ext_resource type="Script" uid="uid://pida2mkqxqpe" path="res://boss_witch.gd" id="1_gwhjd"]
+[ext_resource type="PackedScene" uid="uid://bxr2s8p5mqvtq" path="res://scenes/FireProjectile.tscn" id="2_gxm6r"]
+[ext_resource type="PackedScene" uid="uid://bgdwtaiejli54" path="res://scenes/Level2Projectile.tscn" id="3_l1c2i"]
+[ext_resource type="PackedScene" uid="uid://hqxtrlrsg2vw" path="res://scenes/Level3Projectile.tscn" id="4_e6o3r"]
+[ext_resource type="Texture2D" uid="uid://4rua6xny4wpy" path="res://assets/BossWitch.png" id="5_av81q"]
+
+[node name="BossWitch" type="CharacterBody2D"]
+script = ExtResource("1_gwhjd")
+projectile_scene_1 = ExtResource("2_gxm6r")
+projectile_scene_2 = ExtResource("3_l1c2i")
+projectile_scene_3 = ExtResource("4_e6o3r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("5_av81q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AttackPoint" type="Marker2D" parent="."]
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]

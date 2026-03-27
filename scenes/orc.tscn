@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtoouihelixwx"]
+
+[ext_resource type="Script" uid="uid://cg8cj074davn4" path="res://orc.gd" id="1_bfp0d"]
+[ext_resource type="Texture2D" uid="uid://dj4dokly641lx" path="res://assets/Orc.png" id="2_hu8b3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s5mlm"]
+size = Vector2(22, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nvs4g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xme4o"]
+size = Vector2(20, 21)
+
+[node name="Orc" type="CharacterBody2D"]
+script = ExtResource("1_bfp0d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_hu8b3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-10, 18)
+shape = SubResource("RectangleShape2D_s5mlm")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-10, 18)
+shape = SubResource("RectangleShape2D_nvs4g")
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(-3, 18)
+shape = SubResource("RectangleShape2D_xme4o")
+
+[node name="AttackCooldown" type="Timer" parent="."]

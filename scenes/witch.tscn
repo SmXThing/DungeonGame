@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bywlbnl6w3u38"]
+
+[ext_resource type="Script" uid="uid://bcrrub2psbpyr" path="res://witch.gd" id="1_b1vsk"]
+[ext_resource type="Texture2D" uid="uid://baqkclv60eym7" path="res://assets/Witch.png" id="2_p6b3e"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xk447"]
+height = 48.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_53435"]
+height = 38.0
+
+[node name="Witch" type="CharacterBody2D"]
+script = ExtResource("1_b1vsk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_p6b3e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 5)
+shape = SubResource("CapsuleShape2D_xk447")
+
+[node name="AttackPoint" type="Marker2D" parent="."]
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-3, 8)
+shape = SubResource("CapsuleShape2D_53435")
+
+[node name="AttackCooldown" type="Timer" parent="."]
