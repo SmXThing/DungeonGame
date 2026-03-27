@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://cvfnuoy8tgf03"]
+
+[ext_resource type="Script" uid="uid://dk82i64mggx37" path="res://scripts/enemy/goblin_boss.gd" id="1_vum1t"]
+[ext_resource type="Texture2D" uid="uid://b57jbpptf7csb" path="res://assets/Goblin.png" id="2_8bbr3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c08vd"]
+size = Vector2(28, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bcou7"]
+size = Vector2(29, 43)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b24co"]
+size = Vector2(26, 40)
+
+[node name="GoblinBoss" type="CharacterBody2D"]
+script = ExtResource("1_vum1t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_8bbr3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-7, 6)
+shape = SubResource("RectangleShape2D_c08vd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="HurtBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-6.5, 5.5)
+shape = SubResource("RectangleShape2D_bcou7")
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(-32, 6)
+shape = SubResource("RectangleShape2D_b24co")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
