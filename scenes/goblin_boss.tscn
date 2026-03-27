@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cvfnuoy8tgf03"]
 
-[ext_resource type="Script" uid="uid://dk82i64mggx37" path="res://goblin_boss.gd" id="1_vum1t"]
+[ext_resource type="Script" uid="uid://dk82i64mggx37" path="res://scripts/enemy/goblin_boss.gd" id="1_vum1t"]
 [ext_resource type="Texture2D" uid="uid://b57jbpptf7csb" path="res://assets/Goblin.png" id="2_8bbr3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c08vd"]

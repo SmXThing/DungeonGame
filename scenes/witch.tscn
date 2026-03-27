@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bywlbnl6w3u38"]
 
-[ext_resource type="Script" uid="uid://bcrrub2psbpyr" path="res://witch.gd" id="1_b1vsk"]
+[ext_resource type="Script" uid="uid://bcrrub2psbpyr" path="res://scripts/enemy/witch.gd" id="1_b1vsk"]
 [ext_resource type="Texture2D" uid="uid://baqkclv60eym7" path="res://assets/Witch.png" id="2_p6b3e"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xk447"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cultb802rt8jl"]
 
-[ext_resource type="Script" uid="uid://pida2mkqxqpe" path="res://boss_witch.gd" id="1_gwhjd"]
+[ext_resource type="Script" uid="uid://pida2mkqxqpe" path="res://scripts/enemy/boss_witch.gd" id="1_gwhjd"]
 [ext_resource type="PackedScene" uid="uid://bxr2s8p5mqvtq" path="res://scenes/FireProjectile.tscn" id="2_gxm6r"]
 [ext_resource type="PackedScene" uid="uid://bgdwtaiejli54" path="res://scenes/Level2Projectile.tscn" id="3_l1c2i"]
 [ext_resource type="PackedScene" uid="uid://hqxtrlrsg2vw" path="res://scenes/Level3Projectile.tscn" id="4_e6o3r"]
