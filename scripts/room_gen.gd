@@ -98,7 +98,7 @@ func _process(_delta: float) -> void:
 		$Camera2D.global_position += Vector2.DOWN * var_camera_speed
 	if Input.is_key_pressed(KEY_D):
 		$Camera2D.global_position += Vector2.RIGHT * var_camera_speed
-	if Input.is_action_just_pressed("ENTER") && Input.is_action_pressed("ESC"):
+	if Input.is_action_just_pressed("ENTER") && Input.is_action_pressed("TAB"):
 		get_tree().reload_current_scene()
 	
 	if Input.is_action_pressed("CTRL"): 

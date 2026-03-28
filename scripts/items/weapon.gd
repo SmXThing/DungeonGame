@@ -1,8 +1,7 @@
 extends Equipment
 class_name Weapon
 
-@export var damage: int
-@export var hitbox: Area2D
+var damage: int
 
 func get_damage() -> int:
 	return damage
@@ -15,5 +14,4 @@ func get_info() -> Array:
 	info.append(sprite)
 	info.append(rarity)
 	info.append(damage)
-	info.append(hitbox)
 	return info

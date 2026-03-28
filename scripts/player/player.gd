@@ -15,12 +15,16 @@ signal player_killed
 @export var HUD: CanvasLayer
 @export var inventory_ui: CanvasLayer
 
+@onready var arm: Node2D = $Arm
+@onready var sword_marker: Marker2D = $Arm/SwordMarker
+
 const sprint_multiplier: float = 1.5
 
-var inventory: Array[Item]
+var inventory: Array[Item] = []
 var accessories: Array[Accessory]
-var held_weapon: Weapon
-var armor: Armor
+var equipped: Weapon
+
+var is_attacking: bool = false
 
 var status: Array
 var time: float = 0
@@ -41,6 +45,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	time += delta
 	light.energy = 1.16 + 0.2 * sin(4 * time)
+	
+	if Input.is_key_pressed(KEY_U):
+		inventory.append(weapons.generate_random_weapon("sword"))
 	
 	move_and_slide()
 

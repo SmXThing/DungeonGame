@@ -4,7 +4,7 @@ class_name State
 signal transitioned
 @export var animation_sprite: AnimatedSprite2D
 @export var machine: Node
-@export var player: CharacterBody2D
+@export var player: Player
 
 func update(_delta: float) -> void:
 	pass

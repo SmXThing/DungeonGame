@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://ce7odlbtah125"]
+[gd_scene load_steps=44 format=3 uid="uid://ce7odlbtah125"]
 
 [ext_resource type="Texture2D" uid="uid://bjwkhlkc4in1k" path="res://assets/swordguy.png" id="1_p0vlq"]
 [ext_resource type="Texture2D" uid="uid://b7h8lpmb8uphb" path="res://assets/shadow.png" id="2_smehm"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cxtcscahssdri" path="res://scripts/idle.gd" id="5_qlg0r"]
 [ext_resource type="Script" uid="uid://clsmdrub86fv1" path="res://scripts/walking.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://c31yfveyccmah" path="res://scripts/attacking.gd" id="7_fjrip"]
+[ext_resource type="PackedScene" uid="uid://cfdj4jhu4f0lu" path="res://scenes/inventory_ui.tscn" id="9_ur7pv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0vlq"]
 size = Vector2(12, 4)
@@ -75,6 +76,26 @@ region = Rect2(63, 32, 30, 30)
 [sub_resource type="AtlasTexture" id="AtlasTexture_fulsm"]
 atlas = ExtResource("1_p0vlq")
 region = Rect2(94, 32, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4r5pv"]
+atlas = ExtResource("1_p0vlq")
+region = Rect2(1, 125, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60mlk"]
+atlas = ExtResource("1_p0vlq")
+region = Rect2(32, 125, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4ail"]
+atlas = ExtResource("1_p0vlq")
+region = Rect2(63, 125, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a38lo"]
+atlas = ExtResource("1_p0vlq")
+region = Rect2(94, 125, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ni07"]
+atlas = ExtResource("1_p0vlq")
+region = Rect2(125, 125, 30, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70d11"]
 atlas = ExtResource("1_p0vlq")
@@ -198,6 +219,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_4r5pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60mlk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4ail")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a38lo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ni07")
+}],
+"loop": true,
+"name": &"swing",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_70d11")
 }, {
 "duration": 1.0,
@@ -245,10 +286,7 @@ fill_from = Vector2(0.5, 0.47196263)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
 size = Vector2(12, 10)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
-size = Vector2(20, 24)
-
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_bar", "camera", "sprites", "light", "HUD") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_bar", "camera", "sprites", "light", "HUD", "inventory_ui") groups=["Player"]]
 y_sort_enabled = true
 collision_layer = 2
 collision_mask = 17
@@ -261,6 +299,7 @@ camera = NodePath("Camera2D")
 sprites = NodePath("Sprites")
 light = NodePath("PointLight2D")
 HUD = NodePath("HUD")
+inventory_ui = NodePath("InventoryUI")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -273,7 +312,7 @@ texture = ExtResource("2_smehm")
 
 [node name="Sprites" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_70d11")
-animation = &"walking_up"
+animation = &"swing"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(0.9934314, 0.6432652, 7.70092e-07, 1)
@@ -305,15 +344,6 @@ collision_mask = 512
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_g2els")
 
-[node name="AttackPlaceholder" type="Area2D" parent="." groups=["PlayerAttack"]]
-visible = false
-collision_layer = 32
-collision_mask = 0
-
-[node name="Attack" type="CollisionShape2D" parent="AttackPlaceholder"]
-shape = SubResource("RectangleShape2D_qhqgy")
-debug_color = Color(0.9627866, 0.19569221, 7.70092e-07, 0.41960785)
-
 [node name="HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_qhqgy")]
 player = NodePath("..")
 
@@ -338,5 +368,13 @@ script = ExtResource("7_fjrip")
 animation_sprite = NodePath("../../Sprites")
 machine = NodePath("..")
 player = NodePath("../..")
+
+[node name="Arm" type="Node2D" parent="."]
+position = Vector2(-3, 0)
+
+[node name="SwordMarker" type="Marker2D" parent="Arm"]
+position = Vector2(8, 0)
+
+[node name="InventoryUI" parent="." instance=ExtResource("9_ur7pv")]
 
 [connection signal="area_entered" from="RoomTriggerDetection" to="." method="_on_detection_area_entered"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://5waua11k71iy" path="res://assets/tiles.png" id="1_fiywq"]
 [ext_resource type="PackedScene" uid="uid://drkl1ct2gk2mu" path="res://scenes/Torch.tscn" id="2_3x34p"]
-[ext_resource type="PackedScene" uid="uid://ce7odlbtah125" path="res://scenes/player.tscn" id="2_pvo8e"]
+[ext_resource type="PackedScene" uid="uid://ce7odlbtah125" path="res://scenes/PlayerMelee.tscn" id="2_pvo8e"]
 [ext_resource type="PackedScene" uid="uid://dt4pxv50d0h5h" path="res://scenes/enemy.tscn" id="4_fmiwc"]
 [ext_resource type="PackedScene" uid="uid://div2ihotq0ama" path="res://scenes/enemy_fast.tscn" id="5_50b3t"]
 [ext_resource type="PackedScene" uid="uid://b4u30i1cwiboe" path="res://scenes/enemy_tank.tscn" id="6_t5gph"]

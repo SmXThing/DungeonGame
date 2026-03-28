@@ -1,5 +1,17 @@
-[gd_scene format=3 uid="uid://b1ik3reeu7lpi"]
+[gd_scene load_steps=4 format=3 uid="uid://b1ik3reeu7lpi"]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[ext_resource type="Script" uid="uid://d2isxybqyla7w" path="res://scripts/items/sword.gd" id="1_rb3f2"]
+[ext_resource type="Texture2D" uid="uid://6v4kvynogm4g" path="res://weapons/swords/Wooden_Sword.png" id="2_sh16x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rb3f2"]
+size = Vector2(0, 0)
+
+[node name="SwordItem" type="Node2D"]
+script = ExtResource("1_rb3f2")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rb3f2")
+debug_color = Color(0.9999998, 0.0074547795, 0.074344926, 0.41960785)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_sh16x")

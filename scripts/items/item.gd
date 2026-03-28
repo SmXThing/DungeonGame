@@ -1,9 +1,9 @@
 extends Node2D
 class_name Item
 
-@export var item_name: String
-@export var item_description: String
-@export var sprite: Sprite2D
+var item_name: String
+var item_description: String
+var sprite: Sprite2D
 
 func get_item_name() -> String:
 	return item_name

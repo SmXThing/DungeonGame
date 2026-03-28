@@ -1,7 +1,7 @@
 extends Node
 
 @export var starting_state: State
-@export var holder: CharacterBody2D
+@export var holder: Player
 
 var active_state: State
 var states: Dictionary[String, State] = {}

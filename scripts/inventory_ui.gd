@@ -9,7 +9,7 @@ var slot_scene = preload("res://scenes/ItemSlot.tscn")
 var player: Player
 
 func _ready() -> void:
-	player = get_tree().get_first_node_in_group("player")
+	player = get_parent()
 	hide()  # hidden by default
 
 func toggle() -> void:
