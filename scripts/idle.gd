@@ -1,10 +1,11 @@
 extends State
 
 func update(_delta: float) -> void:
-	if Input.is_action_pressed("KEY_W") || Input.is_action_pressed("KEY_A") || Input.is_action_pressed("KEY_S") || Input.is_action_pressed("KEY_D"):
-		emit("walking")
-	if Input.is_action_pressed("ENTER") || Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		emit("attacking")
+	if !player.lock_idle:
+		if Input.is_action_pressed("KEY_W") || Input.is_action_pressed("KEY_A") || Input.is_action_pressed("KEY_S") || Input.is_action_pressed("KEY_D"):
+			emit("walking")
+		if Input.is_action_pressed("ENTER") || Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			emit("attacking")
 
 func physics_update(_delta: float) -> void:
 	pass

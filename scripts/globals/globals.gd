@@ -1,5 +1,8 @@
 extends Node
 
+var chest_weapon_type: String = "bow"
+var active_class: String = "Ranger"
+
 const directions: Array[Vector2i] = [
 	Vector2i.UP,
 	Vector2i.RIGHT,

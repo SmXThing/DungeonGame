@@ -429,6 +429,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("camera", "light", "HUD", "inventory_ui") groups=["Player"]]
+y_sort_enabled = true
 collision_layer = 2
 collision_mask = 17
 script = ExtResource("1_yby2e")

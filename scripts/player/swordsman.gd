@@ -8,11 +8,11 @@ class_name Melee
 func _ready() -> void:
 	var default_weapon: Sword = weapons.compile_weapon("sword", weapons.default_weapons[0], "Common")
 	inventory.append(default_weapon)
-	equipped = default_weapon
-	equipped.global_position = sword_marker.global_position
-	arm.add_child(equipped)
+	inventory_ui.consume_item(Slot.new(), inventory[0])
+	inventory_ui.refresh()
 
 func swing_sword() -> void:
+	equipped.show()
 	arm_sprites.speed_scale = equipped.attack_speed_scale
 	
 	if facing.x < 0:
@@ -30,4 +30,8 @@ func swing_sword() -> void:
 	await get_tree().create_timer(0.25 / equipped.attack_speed_scale).timeout
 	arm_group.hide()
 	equipped.disable()
+	equipped.hide()
 	is_attacking = false
+
+func clear_equipped() -> void:
+	pass

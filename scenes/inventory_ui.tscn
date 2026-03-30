@@ -1,49 +1,100 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfdj4jhu4f0lu"]
+[gd_scene load_steps=7 format=3 uid="uid://cfdj4jhu4f0lu"]
 
 [ext_resource type="Script" uid="uid://dkeri4ukoio4a" path="res://scripts/inventory_ui.gd" id="1_tahbm"]
+[ext_resource type="Texture2D" uid="uid://c22eqy06x6fof" path="res://assets/InventoryUIBackground.png" id="2_ylkvr"]
+[ext_resource type="Texture2D" uid="uid://tmnh3kllxbxl" path="res://assets/Slot.png" id="3_mdwe3"]
+[ext_resource type="FontFile" uid="uid://d4nj3occmervc" path="res://Vixal_Font_v2.ttf" id="4_iradw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iradw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eifbp"]
+bg_color = Color(0, 0, 0, 0.5803922)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
 
 [node name="InventoryUI" type="CanvasLayer"]
 script = ExtResource("1_tahbm")
 
-[node name="Panel" type="Panel" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -143.0
-offset_top = -79.0
-offset_right = 257.0
-offset_bottom = 221.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_left = 32.0
+offset_top = 7.0
+offset_right = 256.0
+offset_bottom = 153.0
+texture = ExtResource("2_ylkvr")
 
-[node name="GridContainer" type="GridContainer" parent="Panel"]
-layout_mode = 1
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 50.0
-offset_bottom = 50.0
-columns = 6
-
-[node name="ItemTooltip" type="Panel" parent="Panel"]
-visible = false
+[node name="EquippedPanel" type="Panel" parent="NinePatchRect"]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 77.0
-offset_right = 181.0
-offset_bottom = 157.0
+offset_left = 32.0
+offset_top = 9.0
+offset_right = 72.0
+offset_bottom = 49.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_iradw")
 
-[node name="ItemName" type="Label" parent="Panel/ItemTooltip"]
+[node name="Slot" type="Sprite2D" parent="NinePatchRect/EquippedPanel"]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("3_mdwe3")
+centered = false
+
+[node name="SwordEquipped" type="Sprite2D" parent="NinePatchRect/EquippedPanel"]
+position = Vector2(14, 26)
+
+[node name="StaffEquipped" type="Sprite2D" parent="NinePatchRect/EquippedPanel"]
+
+[node name="BowEquipped" type="Sprite2D" parent="NinePatchRect/EquippedPanel"]
+
+[node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 16.0
+offset_top = 61.0
+offset_right = 208.0
+offset_bottom = 142.0
+columns = 9
+
+[node name="Line" type="Line2D" parent="."]
+position = Vector2(0, 4)
+points = PackedVector2Array(48, 59, 240, 59)
+width = 1.0
+
+[node name="ItemTooltip" type="Panel" parent="."]
+offset_left = 152.0
+offset_top = 16.0
+offset_right = 224.0
+offset_bottom = 56.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_eifbp")
+
+[node name="ItemName" type="Label" parent="ItemTooltip"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 102.0
+offset_bottom = 19.0
+scale = Vector2(0.4, 0.4)
+theme_override_fonts/font = ExtResource("4_iradw")
 theme_override_font_sizes/font_size = 8
 
-[node name="ItemDesc" type="Label" parent="Panel/ItemTooltip"]
+[node name="ItemDesc" type="Label" parent="ItemTooltip"]
 layout_mode = 0
-offset_top = 20.0
-offset_right = 40.0
-offset_bottom = 43.0
+offset_left = 4.0
+offset_top = 11.0
+offset_right = 163.99997
+offset_bottom = 73.49999
+scale = Vector2(0.4, 0.4)
+theme_override_fonts/font = ExtResource("4_iradw")
 theme_override_font_sizes/font_size = 8
 autowrap_mode = 2
+
+[node name="ItemTooltip2" type="Panel" parent="."]
+offset_left = 112.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 56.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_eifbp")

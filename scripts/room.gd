@@ -10,6 +10,8 @@ var chest_opened: bool
 var scene_path: String
 var traversed: bool = false
 
+var chest_spawner: Marker2D
+
 func _ready() -> void:
 	for node in $DirectionSensors.get_children():
 		sensors.append(node)
@@ -54,3 +56,7 @@ func unload_adjacent_rooms(ignore: Vector2i) -> void:
 	for room in connected_cells:
 		if room != ignore:
 			get_parent().unload_room(room)
+
+func trigger_chest() -> void:
+	chest_spawner = $ChestSpawner
+	chest_spawner.spawn(chest_opened)

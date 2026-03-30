@@ -21,6 +21,8 @@ enum State { IDLE, PATROL, CHASE, ATTACK }
 @export var min_move_time: float = 1.0
 @export var max_move_time: float = 3.0
 
+@export var sprite: Sprite2D
+
 # variables 
 var state = State.PATROL
 var player: Player = null
@@ -32,13 +34,19 @@ var wall_stop_timer: float = 0.0
 
 # reference to the RayCast2D child node
 @onready var ray: RayCast2D = $RayCast
+@onready var health_bar: TextureProgressBar = $HealthBar
 
 func _ready() -> void:
-	player = get_tree().get_first_node_in_group("player")
+	player = get_tree().get_first_node_in_group("Player")
+	health_bar.max_value = health
+	health_bar.value = health
 
 func _physics_process(delta: float) -> void:
 	attack_timer -= delta
-
+	if velocity.x < 0:
+		sprite.flip_h = true
+	elif velocity.x > 0:
+		sprite.flip_h = false
 	# basically an if/else statement
 	match state:
 		State.IDLE:   idle_state()
@@ -113,7 +121,8 @@ func chase_state() -> void:
 		state = State.PATROL
 		return
 	var distance = global_position.distance_to(player.global_position)
-	velocity = (player.global_position - global_position).normalized() * speed
+	velocity.x = move_toward(velocity.x, ((player.global_position - global_position).normalized() * speed).x, speed / 8)
+	velocity.y = move_toward(velocity.y, ((player.global_position - global_position).normalized() * speed).y, speed / 8)
 	if distance < attack_range:
 		state = State.ATTACK
 	elif distance > detection_range:
@@ -129,11 +138,30 @@ func attack_state() -> void:
 	if distance > attack_range:
 		state = State.CHASE
 		return
-	if attack_timer <= 0.0:
+	if attack_timer <= 0.0 && health_bar.value > 0:
 		player.take_damage(damage)
 		attack_timer = attack_cooldown
 
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("PlayerAttack"):
+		take_damage(area.get_parent().damage + player.strength)
+
 func take_damage(amount: int) -> void:
-	health -= amount
-	if health <= 0:
-		queue_free()
+	health_bar.value -= amount
+	if health_bar.value <= 0:
+		sprite.hide()
+		health_bar.hide()
+		if $HitboxArea:
+			$HitboxArea.queue_free()
+		set_collision_layer_value(3, false)
+		die()
+	else:
+		knockback()
+
+func knockback() -> void:
+	velocity = -velocity
+
+func die() -> void:
+	$Blood.emitting = true
+	await get_tree().create_timer(1.0).timeout
+	queue_free()

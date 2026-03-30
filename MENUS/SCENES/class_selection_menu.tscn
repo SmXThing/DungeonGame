@@ -1,10 +1,28 @@
-[gd_scene format=3 uid="uid://d3jmoqv4kecid"]
+[gd_scene load_steps=10 format=3 uid="uid://d3jmoqv4kecid"]
 
-[node name="Class Selection Menu" type="Control"]
+[ext_resource type="Script" uid="uid://cskemhvtll5vf" path="res://MENUS/SCRIPTS/class_selection_menu.gd" id="1_x1l4i"]
+[ext_resource type="Texture2D" uid="uid://c22eqy06x6fof" path="res://assets/InventoryUIBackground.png" id="2_1se3m"]
+[ext_resource type="FontFile" uid="uid://d4nj3occmervc" path="res://Vixal_Font_v2.ttf" id="2_otibb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0oc40"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wwvkt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_emjk8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_utkr7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_traug"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tjbt5"]
+
+[node name="Class Selection Menu" type="Control" node_paths=PackedStringArray("scene_cover")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 291.0
 offset_bottom = 159.0
+script = ExtResource("1_x1l4i")
+scene_cover = NodePath("Cover")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -13,49 +31,59 @@ offset_right = 290.0
 offset_bottom = 160.0
 color = Color(0.2, 0.2, 0.2, 1)
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 6.0
+offset_right = 258.0
+offset_bottom = 152.0
+texture = ExtResource("2_1se3m")
+
 [node name="Class select" type="Label" parent="."]
 layout_mode = 0
-offset_left = 71.0
+offset_left = 56.0
 offset_top = 19.0
-offset_right = 202.0
+offset_right = 278.0
 offset_bottom = 42.0
-text = "Select Your Class"
+scale = Vector2(0.8, 0.8)
+theme_override_fonts/font = ExtResource("2_otibb")
+text = "SELECT YOUR CLASS"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 51.0
-offset_top = 64.0
-offset_right = 228.0
-offset_bottom = 104.0
+offset_left = 99.0
+offset_top = 56.0
+offset_right = 191.0
+offset_bottom = 157.0
 
 [node name="Mage" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 4
-text = "Mage"
+theme_override_fonts/font = ExtResource("2_otibb")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_0oc40")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wwvkt")
+text = "MAGE"
 
 [node name="Melee" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "Melee"
+theme_override_fonts/font = ExtResource("2_otibb")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_emjk8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_utkr7")
+text = "MELEE"
 
 [node name="Ranger" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-text = "Ranger"
+theme_override_fonts/font = ExtResource("2_otibb")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_traug")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tjbt5")
+text = "RANGER"
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.0
-offset_top = 38.5
-offset_right = 12.0
-offset_bottom = 69.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Back"
+[node name="Cover" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 289.0
+offset_bottom = 162.0
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="HBoxContainer/Mage" to="." method="_on_mage_pressed"]
+[connection signal="pressed" from="HBoxContainer/Melee" to="." method="_on_melee_pressed"]
+[connection signal="pressed" from="HBoxContainer/Ranger" to="." method="_on_ranger_pressed"]

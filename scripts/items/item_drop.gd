@@ -19,7 +19,6 @@ func _ready() -> void:
 	collision_box.shape.size = Vector2(4, 1)
 	add_child(collision_box)
 	
-	pickup_area.set_collision_mask_value(2, true)
 	pickup_area.connect("body_entered", _on_pickup_body_entered)
 	add_child(pickup_area)
 	
@@ -35,7 +34,9 @@ func _ready() -> void:
 	set_collision_mask_value(7, true)
 	
 	velocity.y = -100
-	velocity.x = randi_range(-50, 50)
+	velocity.x = randi_range(-75, 75)
+	await get_tree().create_timer(1.0).timeout
+	pickup_area.set_collision_mask_value(2, true)
 
 func _physics_process(_delta: float) -> void:
 	if !is_on_floor() && velocity.y < 125:
@@ -44,7 +45,6 @@ func _physics_process(_delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, 1)
 	
 	move_and_slide()
-
 func _on_pickup_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		var player: Player = body
@@ -52,6 +52,7 @@ func _on_pickup_body_entered(body: Node2D) -> void:
 		if item_type == "Potion":
 			player.add_item_to_inventory(potions.compile_potion(item_info, rarity))
 		elif item_type == "Weapon":
-			player.add_item_to_inventory(weapons.compile_weapon(item_variation, item_info, rarity))
+			var weapon: Weapon = weapons.compile_weapon(item_variation, item_info, rarity)
+			player.add_item_to_inventory(weapon)
 		
 		queue_free()

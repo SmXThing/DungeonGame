@@ -13,6 +13,7 @@ var AOE: bool
 @export var trail_particles: Node2D
 @export var crash_sfx: AudioStreamPlayer2D
 @export var light: PointLight2D
+var damage: int
 
 func _ready() -> void:
 	global_rotation = Vector2(0, 0).angle_to(direction)

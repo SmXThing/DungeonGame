@@ -22,4 +22,5 @@ func fire(dir: Vector2) -> void:
 	bullet.piercing = piercing
 	bullet.direction = dir
 	bullet.rotation = Vector2(1, 0).angle_to(dir)
+	bullet.damage = damage
 	get_tree().get_first_node_in_group("Floor").add_child(bullet)

@@ -9,9 +9,5 @@ speed = 80.0
 attack_range = 20.0
 detection_range = 150.0
 
-[node name="Sprite2D" parent="." index="0"]
-position = Vector2(2.384186e-07, -2)
-scale = Vector2(0.0625, 0.0625)
-
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2(0, -2)

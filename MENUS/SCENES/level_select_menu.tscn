@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://dthfras3kdgn2"]
+[gd_scene load_steps=4 format=3 uid="uid://dthfras3kdgn2"]
 
 [ext_resource type="Script" uid="uid://ixxc3cro5txm" path="res://MENUS/SCRIPTS/level_select_menu.gd" id="1_y7o05"]
+[ext_resource type="Texture2D" uid="uid://cjrpwp2ikmu85" path="res://assets/menu_screen.png" id="2_67t8g"]
+[ext_resource type="FontFile" uid="uid://d4nj3occmervc" path="res://Vixal_Font_v2.ttf" id="3_q0wli"]
 
-[node name="LevelSelectMenu" type="Control"]
+[node name="LevelSelectMenu" type="Control" node_paths=PackedStringArray("scene_cover")]
 modulate = Color(0.20392157, 1, 1, 1)
 layout_mode = 3
 anchors_preset = 15
@@ -11,6 +13,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_y7o05")
+scene_cover = NodePath("Cover")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_67t8g")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -19,20 +28,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0.7490196)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 96.0
-offset_right = 187.0
-offset_bottom = 23.0
-text = "Select Level"
+offset_left = 63.0
+offset_top = 15.0
+offset_right = 223.0
+offset_bottom = 38.0
+theme_override_fonts/font = ExtResource("3_q0wli")
+text = "SELECT FLOOR"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 20.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -45,20 +58,33 @@ columns = 2
 
 [node name="Level1Button" type="Button" parent="CenterContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "PlaceHolder text"
+theme_override_fonts/font = ExtResource("3_q0wli")
+text = "FLOOR 1"
 
 [node name="Level2Button" type="Button" parent="CenterContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "Placeholder text"
+theme_override_fonts/font = ExtResource("3_q0wli")
+text = "FLOOR 2"
 
 [node name="Level3Button" type="Button" parent="CenterContainer/VBoxContainer/GridContainer"]
+modulate = Color(0.30692267, 0.3069227, 0.3069227, 1)
 layout_mode = 2
-text = "Comming Soon"
+theme_override_fonts/font = ExtResource("3_q0wli")
+text = "COMING
+SOON"
 
 [node name="Level4Button" type="Button" parent="CenterContainer/VBoxContainer/GridContainer"]
+modulate = Color(0.21950102, 0.21950102, 0.21950102, 1)
 layout_mode = 2
-text = "Coming Soon"
+theme_override_fonts/font = ExtResource("3_q0wli")
+text = "COMING
+SOON"
 
-[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "Back"
+[node name="Cover" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 288.0
+offset_bottom = 164.0
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/GridContainer/Level1Button" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/GridContainer/Level2Button" to="." method="_on_level_2_pressed"]

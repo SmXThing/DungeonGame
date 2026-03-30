@@ -23,7 +23,7 @@ func _ready() -> void:
 	var actual_width: int = int(floor(diagonal_width * sqrt(2)))
 	hitbox.shape.size = Vector2(actual_range, actual_width)
 	hitbox.position.x = actual_range / 2.0
-	hitbox_area.add_child(hitbox)	
+	hitbox_area.add_child(hitbox)
 
 func trigger() -> void:
 	hitbox_area.monitorable = true

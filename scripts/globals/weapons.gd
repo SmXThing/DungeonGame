@@ -218,8 +218,16 @@ func generate_random_weapon(weapon_type: String) -> Array:
 		rarity = "Epic"
 	else:
 		rarity = "Legendary"
-	
+
 	possible_weapons = weapons[weapon_type][rarity]
 	weapon_info = possible_weapons[randi_range(0, len(possible_weapons) - 1)]
 	
 	return ["Weapon", weapon_type, weapon_info, rarity]
+
+func get_legendary_item() -> Weapon:
+	if globals.active_class == "Mage":
+		return compile_weapon("staff", legendary_staffs[0], "Legendary")
+	elif globals.active_class == "Melee":
+		return compile_weapon("sword", legendary_swords[0], "Legendary")
+	else:
+		return compile_weapon("bow", legendary_bows[0], "Legendary")

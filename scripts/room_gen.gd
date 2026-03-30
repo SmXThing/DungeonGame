@@ -11,6 +11,7 @@ Room Gen Tips:
 @export var camera_speed: int = 10
 ##Loads all rooms in the scene. (WARNING: Should only be enabled for smaller dungeons as larger dungeons can cause severe lag!)
 @export var load_all: bool = false
+@export var num_chests: int = 5
 var enable_room_loading: bool = true
 var var_camera_speed: int
 
@@ -32,7 +33,16 @@ var starting_room_cell: Vector2i
 var boss_room_cell: Vector2i
 var max_cells_remaining = depth
 
+@export var scene_cover: ColorRect
+
 func _ready() -> void:
+	if globals.active_class != "Ranger":
+		$PlayerRanger.queue_free()
+	if globals.active_class != "Mage":
+		$PlayerMage.queue_free()
+	if globals.active_class != "Melee":
+		$PlayerMelee.queue_free()
+	
 	var_camera_speed = camera_speed
 	max_cells_remaining = depth
 	
@@ -71,10 +81,19 @@ func _ready() -> void:
 			room.connected_cells.append(room.cell + dir)
 		room.global_position = to_actual(room.cell)
 		room.scene_path = path
-		'''if cell_positions[index] == starting_room_cell || cell_positions[index] == boss_room_cell:
-			room.modulate = Color.GREEN'''
 		
 		room_scenes[cell_positions[index]] = room
+		index += 1
+	
+	var shuffled_cells: Array = cell_positions
+	shuffled_cells.shuffle()
+	
+	var rooms_remaining: int = num_chests
+	index = 0
+	while rooms_remaining > 0:
+		if shuffled_cells[index] != starting_room_cell && shuffled_cells[index] != boss_room_cell:
+			room_scenes[shuffled_cells[index]].trigger_chest()
+			rooms_remaining -= 1
 		index += 1
 	
 	if load_all:
@@ -83,32 +102,12 @@ func _ready() -> void:
 		enable_room_loading = false
 	else:
 		load_room(starting_room_cell)
-
-func _process(_delta: float) -> void:
-	if Input.is_key_pressed(KEY_W):
-		$Camera2D.global_position += Vector2.UP * var_camera_speed
-	if Input.is_key_pressed(KEY_A):
-		$Camera2D.global_position += Vector2.LEFT * var_camera_speed
-	if Input.is_key_pressed(KEY_S):
-		$Camera2D.global_position += Vector2.DOWN * var_camera_speed
-	if Input.is_key_pressed(KEY_D):
-		$Camera2D.global_position += Vector2.RIGHT * var_camera_speed
-	if Input.is_action_just_pressed("ENTER") && Input.is_action_pressed("TAB"):
-		get_tree().reload_current_scene()
 	
-	if Input.is_action_pressed("CTRL"): 
-		if Input.is_action_pressed("ui_up"):
-			$Camera2D.zoom += 0.01 * Vector2(1, 1)
-		elif Input.is_action_pressed("ui_down") && $Camera2D.zoom.x > 0.05:
-			$Camera2D.zoom -= 0.01 * Vector2(1, 1)
-		if Input.is_action_just_pressed("ENTER"):
-			$DirectionalLight2D.visible = !$DirectionalLight2D.visible
-	
-	if Input.is_action_just_pressed("SHIFT"):
-		var_camera_speed *= 3
-	if Input.is_action_just_released("SHIFT"):
-		var_camera_speed = camera_speed
-		
+	$Theme.play()
+	var tween = create_tween()
+	tween.tween_property(scene_cover, "color", Color(0, 0, 0, 0), 2)
+	await get_tree().create_timer(2).timeout
+	scene_cover.hide()
 
 func to_cell(pos: Vector2) -> Vector2i:
 	return Vector2i(pos / Vector2(get_viewport_rect().size))
@@ -285,8 +284,6 @@ func copy_room(room: Room) -> Room:
 	updated_room.global_position = to_actual(room.get_cell_pos())
 	updated_room.scene_path = room.get_scene_path()
 	updated_room.traversed = room.traversed
-	if room.get_cell_pos() == starting_room_cell || room.get_cell_pos() == boss_room_cell:
-		updated_room.modulate = Color.GREEN
 	
 	return updated_room
 
@@ -294,3 +291,10 @@ func display_room_info() -> void:
 	print("----------------------------------------------------------------")
 	for room in room_scenes.keys():
 		print("(Type: " + str(room_scenes[room].get_class()) + ") " + "Key: " + str(room) + "Actual Cell: " + str(room_scenes[room].cell) + " - Path: " + room_scenes[room].get_scene_path() + " - Adjacent Cells: " + str(room_scenes[room].connected_cells))
+
+func exit() -> void:
+	scene_cover.show()
+	var tween = create_tween()
+	tween.tween_property(scene_cover, "color", Color(0, 0, 0, 1), 4)
+	await get_tree().create_timer(4).timeout
+	get_tree().call_deferred("change_scene_to_file", "res://MENUS/SCENES/class_selection_menu.tscn")

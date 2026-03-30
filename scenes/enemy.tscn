@@ -1,27 +1,50 @@
-[gd_scene load_steps=4 format=3 uid="uid://dt4pxv50d0h5h"]
+[gd_scene load_steps=5 format=3 uid="uid://dt4pxv50d0h5h"]
 
-[ext_resource type="Script" uid="uid://122d4gaof7sl" path="res://scripts/enemy/enemy.gd" id="1_md0e3"]
-[ext_resource type="Texture2D" uid="uid://o4arua2neas6" path="res://icon.svg" id="2_4ra3w"]
+[ext_resource type="Script" uid="uid://hgbxpdcaxm3y" path="res://scripts/enemy/enemy_tank.gd" id="1_4ra3w"]
+[ext_resource type="Texture2D" uid="uid://dotcxjh8cnxwe" path="res://assets/HealthBarBack.png" id="2_4ra3w"]
+[ext_resource type="Texture2D" uid="uid://dwfhhb7hp01y8" path="res://assets/HealthBar.png" id="3_5uy6h"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5uy6h"]
-size = Vector2(8, 8)
+[sub_resource type="Curve" id="Curve_4ra3w"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 4
-script = ExtResource("1_md0e3")
+script = ExtResource("1_4ra3w")
 speed = 30.0
 attack_range = 12.0
 detection_range = 128.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -1.4901161e-08)
-scale = Vector2(0.06250001, 0.03125)
-texture = ExtResource("2_4ra3w")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_5uy6h")
-
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 
 [node name="RayCast" type="RayCast2D" parent="."]
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = -12.0
+offset_top = -11.0
+offset_right = 90.0
+offset_bottom = -6.0
+scale = Vector2(0.25, 0.25)
+texture_under = ExtResource("2_4ra3w")
+texture_progress = ExtResource("3_5uy6h")
+texture_progress_offset = Vector2(1, 1)
+
+[node name="HitboxArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="Blood" type="CPUParticles2D" parent="."]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 15)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+scale_amount_min = 0.8
+scale_amount_max = 1.2
+scale_amount_curve = SubResource("Curve_4ra3w")
+color = Color(0.5384553, 0, 0.046866998, 1)
+
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_entered"]

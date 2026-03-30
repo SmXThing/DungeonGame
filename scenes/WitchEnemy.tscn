@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjiu7c2k7f5f0"]
+
+[ext_resource type="PackedScene" uid="uid://dt4pxv50d0h5h" path="res://scenes/enemy.tscn" id="1_yy6yu"]
+[ext_resource type="Texture2D" uid="uid://baqkclv60eym7" path="res://assets/Witch.png" id="2_hcdia"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yy6yu"]
+size = Vector2(8, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hcdia"]
+size = Vector2(6, 11)
+
+[node name="Enemy" node_paths=PackedStringArray("sprite") instance=ExtResource("1_yy6yu")]
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="3"]
+position = Vector2(-1, 2)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_hcdia")
+offset = Vector2(1.7, -8.29)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea" index="0"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_yy6yu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="5"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_hcdia")

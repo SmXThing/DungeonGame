@@ -9,7 +9,7 @@ func _ready() -> void:
 	switched_direction.connect(_on_switched_direction)
 
 func update(_delta: float) -> void:
-	if player.velocity == Vector2(0, 0):
+	if player.lock_idle || player.velocity == Vector2(0, 0):
 		body.speed_scale = 1
 		arms.speed_scale = 1
 		emit("idle")

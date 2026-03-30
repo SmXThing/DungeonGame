@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://bywlbnl6w3u38"]
 
-[ext_resource type="Script" uid="uid://bcrrub2psbpyr" path="res://scripts/enemy/witch.gd" id="1_b1vsk"]
+[ext_resource type="Script" path="res://scripts/enemy/witch.gd" id="1_b1vsk"]
 [ext_resource type="Texture2D" uid="uid://baqkclv60eym7" path="res://assets/Witch.png" id="2_p6b3e"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xk447"]
-height = 48.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b1vsk"]
+size = Vector2(14, 17)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_53435"]
 height = 38.0
@@ -13,13 +13,14 @@ height = 38.0
 script = ExtResource("1_b1vsk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_p6b3e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-4, 5)
-shape = SubResource("CapsuleShape2D_xk447")
+position = Vector2(-2, 3.5)
+shape = SubResource("RectangleShape2D_b1vsk")
 
 [node name="AttackPoint" type="Marker2D" parent="."]
 

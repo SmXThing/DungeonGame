@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=4 uid="uid://d1dcrab0povuj"]
+[gd_scene load_steps=2 format=4 uid="uid://d1dcrab0povuj"]
 
 [ext_resource type="PackedScene" uid="uid://bmf86mixb5e0j" path="res://scenes/RoomBuilder.tscn" id="1_wx6d4"]
-[ext_resource type="PackedScene" uid="uid://ddrbhljnmt27l" path="res://scenes/enemy_spawner.tscn" id="2_fgn7m"]
 
 [node name="Room" instance=ExtResource("1_wx6d4")]
 
@@ -17,8 +16,8 @@ tile_map_data = PackedByteArray("AAAEAP3/AAAFAAQAAAAEAP7/AAAFAAUAAAAFAP3/AAAGAAQ
 [node name="decoration_layer2" parent="." index="3"]
 tile_map_data = PackedByteArray("AAD7/wEAAAABAAgAAAD8/wIAAAAAAAgAAAD9/wAAAAAFAAQAAAD9/wEAAAAFAAUAAAD+/wAAAAAGAAQAAAD+/wEAAAAGAAUAAAA=")
 
-[node name="chest_placeholder" parent="." index="4"]
-tile_map_data = PackedByteArray("AAAFAPv/AAAGAAYAAAAFAPz/AAAGAAcAAAA=")
+[node name="ChestSpawner" parent="." index="7"]
+position = Vector2(88, -60)
 
-[node name="EnemySpawner" parent="." index="8" instance=ExtResource("2_fgn7m")]
-position = Vector2(103, 35)
+[node name="EnemySpawner" parent="." index="8"]
+tile_map_data = PackedByteArray("AAD7////AAAAAAAAAQD8/wIAAAAAAAAAAQA=")

@@ -17,4 +17,5 @@ func shoot(dir: Vector2) -> void:
 	arrow.piercing = piercing
 	arrow.direction = dir
 	arrow.rotation = Vector2(1, 0).angle_to(dir)
+	arrow.damage = damage
 	get_tree().get_first_node_in_group("Floor").add_child(arrow)

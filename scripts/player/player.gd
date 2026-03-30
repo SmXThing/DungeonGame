@@ -25,9 +25,14 @@ var equipped: Weapon
 
 var is_attacking: bool = false
 
-var status: Array
+var status_num: int
 var time: float = 0
 var facing: Vector2 = Vector2(1, 1)
+
+var strength: int = 1
+var endurance: int = 1
+
+var lock_idle: bool = false
 
 func _ready() -> void:
 	if enable_camera_limit:
@@ -38,9 +43,8 @@ func _physics_process(delta: float) -> void:
 	time += delta
 	light.energy = 1.16 + 0.2 * sin(4 * time)
 	
-	if Input.is_key_pressed(KEY_U):
-		inventory.append(weapons.generate_random_weapon("sword"))
-	
+	if Input.is_key_pressed(KEY_U) && Input.is_action_just_pressed("CTRL"):
+		inventory.append(weapons.get_legendary_item())
 	move_and_slide()
 
 func camera_translation(cell_pos: Vector2i, duration: float) -> void:
@@ -56,9 +60,9 @@ func camera_translation(cell_pos: Vector2i, duration: float) -> void:
 	tween_4.tween_property(camera, "limit_bottom", actual_pos.y, duration).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 
 func take_damage(damage: int) -> void:
-	health_bar.value -= damage
-	if health_bar.value < 1:
-		player_killed.emit()
+	HUD.health_bar.value -= damage
+	if HUD.health_bar.value < 1:
+		get_parent().exit()
 
 func add_item_to_inventory(item: Item) -> bool:
 	if len(inventory) < inventory_space:
@@ -78,5 +82,31 @@ func _on_detection_area_entered(area: Area2D) -> void:
 			camera_translation(room.cell, 1.5)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_inventory"):  # plan to set this to "i" key
+	if event.is_action_pressed("ui_inventory") && !is_attacking:  # plan to set this to "i" key
+		lock_idle = true
 		inventory_ui.toggle()
+
+func apply_status(potion: Potion) -> void:
+	if potion.type == "Health":
+		if potion.mod + HUD.health_bar.value > player_health:
+			HUD.health_bar.value = player_health
+		else:
+			HUD.health_bar.value += potion.mod
+		return
+	
+	status_num += 1
+	
+	if potion.type == "Strength":
+		strength += potion.mod
+		await get_tree().create_timer(potion.duration).timeout
+		strength -= potion.mod
+	elif potion.type == "Speed":
+		movement_speed += potion.mod
+		await get_tree().create_timer(potion.duration).timeout
+		movement_speed -= potion.mod
+	elif potion.type == "Endurance":
+		endurance += potion.mod
+		await get_tree().create_timer(potion.duration).timeout
+		endurance -= potion.mod
+	
+	status_num -= 1

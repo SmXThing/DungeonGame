@@ -16,7 +16,7 @@ var item_variation: String
 var item_info: Array
 var item_rarity: String
 
-@export var weapon_type: String
+var weapon_type: String = globals.chest_weapon_type
 var num_potions: int = 3
 
 var weapon: Array

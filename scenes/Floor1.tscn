@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://pire8pp3vxo7"]
+
+[ext_resource type="Script" uid="uid://ccc6xe0dbsyjj" path="res://scripts/room_gen.gd" id="1_cbsnm"]
+[ext_resource type="PackedScene" uid="uid://cx6d2xag4nb2a" path="res://scenes/PlayerMage.tscn" id="2_dlt5l"]
+[ext_resource type="PackedScene" uid="uid://ce7odlbtah125" path="res://scenes/PlayerMelee.tscn" id="3_xmotb"]
+[ext_resource type="PackedScene" uid="uid://jxlplbj0r2r8" path="res://scenes/PlayerRanger.tscn" id="4_15ijw"]
+[ext_resource type="AudioStream" uid="uid://betjuerp6gw0t" path="res://sounds/DungeonCrashersMenuTheme.mp3" id="5_xmotb"]
+
+[node name="Floor" type="Node2D" node_paths=PackedStringArray("scene_cover") groups=["Floor"]]
+y_sort_enabled = true
+script = ExtResource("1_cbsnm")
+num_chests = 8
+scene_cover = NodePath("CanvasLayer/Cover")
+
+[node name="PlayerMage" parent="." instance=ExtResource("2_dlt5l")]
+
+[node name="PlayerMelee" parent="." instance=ExtResource("3_xmotb")]
+enable_camera_limit = true
+
+[node name="PlayerRanger" parent="." instance=ExtResource("4_15ijw")]
+movement_speed = 115.0
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+color = Color(0.9957575, 0.78909475, 0.7850813, 1)
+energy = 1.2
+blend_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Cover" type="ColorRect" parent="CanvasLayer"]
+offset_right = 288.0
+offset_bottom = 160.0
+color = Color(0, 0, 0, 1)
+
+[node name="Theme" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_xmotb")
+volume_db = -11.107
+bus = &"Music"

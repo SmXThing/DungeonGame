@@ -1,9 +1,11 @@
-[gd_scene load_steps=44 format=4 uid="uid://bmf86mixb5e0j"]
+[gd_scene load_steps=46 format=4 uid="uid://bmf86mixb5e0j"]
 
 [ext_resource type="Texture2D" uid="uid://5waua11k71iy" path="res://assets/tiles.png" id="1_rnsln"]
 [ext_resource type="Script" uid="uid://bvmxwmxgook5b" path="res://scripts/room.gd" id="1_xqvw2"]
 [ext_resource type="PackedScene" uid="uid://drkl1ct2gk2mu" path="res://scenes/Torch.tscn" id="2_vyecp"]
 [ext_resource type="PackedScene" uid="uid://d2keusojiit7m" path="res://scenes/Barrel.tscn" id="3_hf77l"]
+[ext_resource type="PackedScene" uid="uid://mu54tkds5jnt" path="res://scenes/ChestSpawner.tscn" id="5_pjq4h"]
+[ext_resource type="PackedScene" uid="uid://dyri31xb7guhr" path="res://scenes/EnemySpawner.tscn" id="6_5b0sx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vyecp"]
 texture = ExtResource("1_rnsln")
@@ -541,18 +543,6 @@ physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_pjq4h")
 sources/1 = SubResource("TileSetScenesCollectionSource_pjq4h")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hf77l"]
-texture = ExtResource("1_rnsln")
-6:7/0 = 0
-6:7/0/y_sort_origin = -14
-6:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 1, -8, 1)
-6:6/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_xqvw2"]
-physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 0
-sources/0 = SubResource("TileSetAtlasSource_hf77l")
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uadj8"]
 texture = ExtResource("1_rnsln")
 9:6/0 = 0
@@ -585,6 +575,12 @@ size = Vector2(64, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uadj8"]
 size = Vector2(32, 64)
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_uadj8"]
+scenes/1/scene = ExtResource("6_5b0sx")
+
+[sub_resource type="TileSet" id="TileSet_8kfwn"]
+sources/0 = SubResource("TileSetScenesCollectionSource_uadj8")
+
 [node name="Room" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_xqvw2")
@@ -608,10 +604,6 @@ tile_set = SubResource("TileSet_uadj8")
 [node name="decoration_layer2" type="TileMapLayer" parent="."]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_5b0sx")
-
-[node name="chest_placeholder" type="TileMapLayer" parent="."]
-y_sort_enabled = true
-tile_set = SubResource("TileSet_xqvw2")
 
 [node name="stairs" type="TileMapLayer" parent="."]
 y_sort_enabled = true
@@ -662,6 +654,11 @@ collision_mask = 2
 position = Vector2(-128, 0)
 shape = SubResource("RectangleShape2D_uadj8")
 debug_color = Color(0.9882353, 0, 0.3137255, 0.41960785)
+
+[node name="ChestSpawner" parent="." instance=ExtResource("5_pjq4h")]
+
+[node name="EnemySpawner" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_8kfwn")
 
 [connection signal="area_entered" from="PlayerDetectionArea" to="." method="_on_detection_entered"]
 [connection signal="area_exited" from="PlayerDetectionArea" to="." method="_on_detection_exited"]

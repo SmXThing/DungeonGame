@@ -1,7 +1,7 @@
 extends Node2D
 
 func _ready() -> void:
-	for num in range(0, 25):
+	for num in range(0, 6):
 		var itemdata: Array = weapons.generate_random_weapon("sword")
 		var drop: Drop = Drop.new()
 		drop.item_type = "Weapon"
@@ -11,8 +11,3 @@ func _ready() -> void:
 		drop.rarity = itemdata[3]
 		
 		add_child(drop)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

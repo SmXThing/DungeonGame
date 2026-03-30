@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://be0ppxjfnheqd"]
+
+[ext_resource type="PackedScene" uid="uid://dt4pxv50d0h5h" path="res://scenes/enemy.tscn" id="1_nftxo"]
+[ext_resource type="Texture2D" uid="uid://dj4dokly641lx" path="res://assets/Orc.png" id="2_o3es4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nftxo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3es4"]
+size = Vector2(20, 13)
+
+[node name="Enemy" node_paths=PackedStringArray("sprite") instance=ExtResource("1_nftxo")]
+speed = 15.0
+damage = 12
+attack_cooldown = 1.7
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+position = Vector2(-9, 18)
+texture = ExtResource("2_o3es4")
+offset = Vector2(8.985, -18.925)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea" index="0"]
+shape = SubResource("RectangleShape2D_nftxo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="6"]
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_o3es4")
+debug_color = Color(0.99806637, 0, 0.16217598, 0.41960785)

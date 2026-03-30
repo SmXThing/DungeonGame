@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0vhwb6wgd8kd"]
+[gd_scene load_steps=4 format=3 uid="uid://b0vhwb6wgd8kd"]
 
 [ext_resource type="Script" uid="uid://dpvlik0xf8laf" path="res://MENUS/SCRIPTS/Title_screen.gd" id="1_7rb76"]
+[ext_resource type="Texture2D" uid="uid://1mjgefui2kvb" path="res://assets/TitleCard.png" id="2_kcqig"]
+[ext_resource type="FontFile" uid="uid://d4nj3occmervc" path="res://Vixal_Font_v2.ttf" id="3_25xi2"]
 
-[node name="TitleScreen" type="Control"]
+[node name="TitleScreen" type="Control" node_paths=PackedStringArray("scene_cover")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7rb76")
+scene_cover = NodePath("Cover")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -20,19 +23,22 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="TitleButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-action_mode = 0
-text = "Press Any Key
-To Enter Dungeon"
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(136, 39)
+texture = ExtResource("2_kcqig")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 123.0
+offset_right = 375.0
+offset_bottom = 146.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("3_25xi2")
+text = "PRESS ANY KEY TO CONTINUE"
+
+[node name="Cover" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 289.0
+offset_bottom = 164.0
+color = Color(0, 0, 0, 1)

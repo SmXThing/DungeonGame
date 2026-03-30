@@ -16,5 +16,8 @@ tile_map_data = PackedByteArray("AAD7//3/AAAKAAIAAAD7//7/AAAKAAMAAAD8//3/AAALAAI
 [node name="decoration_layer2" parent="." index="3"]
 tile_map_data = PackedByteArray("AAABAAIAAAAFAAQAAAABAAMAAAAFAAUAAAACAAIAAAAGAAQAAAACAAMAAAAGAAUAAAD9//7/AAAHAAQAAAD9////AAAHAAUAAAD+//7/AAAIAAQAAAD+////AAAIAAUAAAD7//z/AAAFAAQAAAD7//3/AAAFAAUAAAD8//z/AAAGAAQAAAD8//3/AAAGAAUAAAD4/wMAAAAEAAYAAAAHAAMAAAAFAAYAABAHAPz/AAAEAAgAABA=")
 
-[node name="chest_placeholder" parent="." index="4"]
-tile_map_data = PackedByteArray("AAAFAAIAAAAGAAYAAAAFAAMAAAAGAAcAAAA=")
+[node name="ChestSpawner" parent="." index="7"]
+position = Vector2(88, 52)
+
+[node name="EnemySpawner" parent="." index="8"]
+tile_map_data = PackedByteArray("AAACAP3/AAAAAAAAAQA=")
