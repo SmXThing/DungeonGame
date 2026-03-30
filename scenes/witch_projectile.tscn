@@ -1,10 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://q0e0x8gjunya"]
+[gd_scene load_steps=4 format=3 uid="uid://q0e0x8gjunya"]
 
 [ext_resource type="Script" uid="uid://dtl10mtl6x60g" path="res://scripts/witch_projectile.gd" id="1_hdigh"]
+[ext_resource type="Texture2D" uid="uid://7cw0b30xkukk" path="res://assets/PurpleFlame.png" id="2_qtuvc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_duchr"]
+radius = 4.0
+height = 17.96406
 
 [node name="WitchProjectile" type="Area2D"]
 script = ExtResource("1_hdigh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qtuvc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.5075938
+shape = SubResource("CapsuleShape2D_duchr")

@@ -16,11 +16,16 @@ func spawn_enemy() -> void:
 		return
 
 	current_enemy = enemy_scene.instantiate()
-	current_enemy.global_position = global_position
-	get_tree().current_scene.add_child(current_enemy)
 
-	if current_enemy.has_signal("tree_exited"):
-		current_enemy.tree_exited.connect(_on_enemy_removed)
+	var random_offset = Vector2(
+		randf_range(-40.0, 40.0),
+		randf_range(-40.0, 40.0)
+	)
+
+	current_enemy.global_position = global_position + random_offset
+	get_parent().add_child(current_enemy)
+
+	current_enemy.tree_exited.connect(_on_enemy_removed)
 
 func _on_enemy_removed() -> void:
 	respawn_timer.wait_time = respawn_time
