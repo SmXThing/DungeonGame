@@ -10,7 +10,8 @@ func _ready():
 	$VBoxContainer/Exit.pressed.connect(_on_exit)
 
 func _on_start():
-	get_tree().change_scene_to_file("res://menus/LevelSelectMenu.tscn")
+	print("Start button pressed!")
+	get_tree().change_scene_to_file("res://MENUS/SCENES/level_select_menu.tscn")
 
 func _on_options():
 	print("Options menu not made yet")  # we’ll build this later
