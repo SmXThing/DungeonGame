@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://cultb802rt8jl"]
+[gd_scene load_steps=8 format=3 uid="uid://cultb802rt8jl"]
 
 [ext_resource type="Script" uid="uid://pida2mkqxqpe" path="res://scripts/enemy/boss_witch.gd" id="1_gwhjd"]
 [ext_resource type="PackedScene" uid="uid://bxr2s8p5mqvtq" path="res://scenes/FireProjectile.tscn" id="2_gxm6r"]
 [ext_resource type="PackedScene" uid="uid://bgdwtaiejli54" path="res://scenes/Level2Projectile.tscn" id="3_l1c2i"]
 [ext_resource type="PackedScene" uid="uid://hqxtrlrsg2vw" path="res://scenes/Level3Projectile.tscn" id="4_e6o3r"]
 [ext_resource type="Texture2D" uid="uid://4rua6xny4wpy" path="res://assets/BossWitch.png" id="5_av81q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gxm6r"]
+size = Vector2(20, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l1c2i"]
+size = Vector2(20, 43)
 
 [node name="BossWitch" type="CharacterBody2D"]
 script = ExtResource("1_gwhjd")
@@ -18,9 +24,14 @@ projectile_scene_3 = ExtResource("4_e6o3r")
 texture = ExtResource("5_av81q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_gxm6r")
 
 [node name="AttackPoint" type="Marker2D" parent="."]
 
 [node name="Hurtbox" type="Area2D" parent="."]
+position = Vector2(0, -2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-3, 9)
+shape = SubResource("RectangleShape2D_l1c2i")
