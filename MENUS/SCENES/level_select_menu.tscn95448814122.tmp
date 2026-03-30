@@ -1,0 +1,79 @@
+[gd_scene load_steps=3 format=3 uid="uid://dthfras3kdgn2"]
+
+[ext_resource type="Script" uid="uid://ixxc3cro5txm" path="res://level_select_menu.gd" id="1_y7o05"]
+[ext_resource type="Script" uid="uid://hmilqo12ger" path="res://level_button.gd" id="2_mflmt"]
+
+[node name="Level Select Menu" type="Control"]
+modulate = Color(0.20392157, 1, 1, 1)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_y7o05")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Select Level "
+
+[node name="LevelButton" type="GridContainer" parent="."]
+modulate = Color(0.03137255, 1, 1, 1)
+self_modulate = Color(1, 0.45, 0.45, 1)
+layout_mode = 1
+anchors_preset = -1
+offset_top = -1.0
+offset_right = 291.0
+offset_bottom = 166.0
+script = ExtResource("2_mflmt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelButton"]
+layout_mode = 2
+
+[node name="Level Name" type="Label" parent="LevelButton/VBoxContainer"]
+layout_mode = 2
+
+[node name="Score" type="Label" parent="LevelButton/VBoxContainer"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 112.0
+offset_right = 248.0
+offset_bottom = 153.0
+text = "Back"
+
+[node name="Level 1" type="Button" parent="."]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 32.0
+offset_right = 76.0
+offset_bottom = 63.0
+text = "1"
+
+[node name="Level 2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 32.0
+offset_right = 124.0
+offset_bottom = 63.0
+text = "2"
+
+[node name="Level 3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 29.0
+offset_right = 215.0
+offset_bottom = 106.0
+text = "3
+Coming 
+soon"
+
+[node name="Level 4" type="Button" parent="."]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 29.0
+offset_right = 292.0
+offset_bottom = 106.0
+text = "4
+Coming 
+soon"

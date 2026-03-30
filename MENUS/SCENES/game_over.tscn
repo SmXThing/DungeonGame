@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://camxies5wwytu"]
+
+[ext_resource type="Texture2D" uid="uid://dd1xbf0g4xw1k" path="res://menu/download.webp" id="1_y26ei"]
+
+[node name="Game over" type="Node2D"]
+
+[node name="Download" type="Sprite2D" parent="."]
+position = Vector2(144.5, 80)
+scale = Vector2(0.66898155, 0.6666667)
+texture = ExtResource("1_y26ei")

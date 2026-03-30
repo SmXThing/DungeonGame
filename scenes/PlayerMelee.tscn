@@ -493,7 +493,7 @@ animation = &"walking_down"
 [node name="BodySprites" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tjwkd")
 animation = &"idle_down"
-frame_progress = 0.77131087
+frame_progress = 0.041472618
 
 [node name="shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_smehm")
