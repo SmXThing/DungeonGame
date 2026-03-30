@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://csiu5rmpbt20o"]
+[gd_scene load_steps=5 format=3 uid="uid://dhjhaobx7evga"]
 
 [ext_resource type="Script" uid="uid://ccc6xe0dbsyjj" path="res://scripts/room_gen.gd" id="1_wen4y"]
 [ext_resource type="PackedScene" uid="uid://ce7odlbtah125" path="res://scenes/PlayerMelee.tscn" id="2_w8un3"]
+[ext_resource type="Script" uid="uid://bcahoswjpfywj" path="res://scripts/drop_test.gd" id="3_0d6la"]
+[ext_resource type="PackedScene" uid="uid://do56wltbshqf1" path="res://scenes/Chest.tscn" id="4_di7wo"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Floor" type="Node2D" groups=["Floor"]]
 y_sort_enabled = true
 script = ExtResource("1_wen4y")
 camera_speed = 0
@@ -18,7 +20,11 @@ color = Color(0.9957575, 0.78909475, 0.7850813, 1)
 energy = 1.2
 blend_mode = 1
 
+[node name="Chest" parent="." instance=ExtResource("4_di7wo")]
+position = Vector2(50, -20)
+weapon_type = "sword"
+
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("3_0d6la")
+
 [node name="Player" parent="." instance=ExtResource("2_w8un3")]
-slide_on_ceiling = false
-movement_speed = 75.0
-enable_camera_limit = true

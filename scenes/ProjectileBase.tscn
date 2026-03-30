@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://cs7lq3onjnjy2"]
+
+[ext_resource type="Script" uid="uid://c0tycy4n81a7k" path="res://scripts/items/colored_projectile.gd" id="1_6dxj1"]
+
+[node name="ProjectileBase" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "HitboxArea", "hitbox", "break_particles", "trail_particles", "crash_sfx")]
+y_sort_enabled = true
+script = ExtResource("1_6dxj1")
+sprite = NodePath("Sprite")
+HitboxArea = NodePath("HitboxArea")
+hitbox = NodePath("HitboxArea/Hitbox")
+break_particles = NodePath("BreakParticles")
+trail_particles = NodePath("TrailParticles")
+crash_sfx = NodePath("CrashSFX")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="HitboxArea" type="Area2D" parent="." groups=["PlayerAttack"]]
+collision_layer = 32
+collision_mask = 5
+
+[node name="Hitbox" type="CollisionShape2D" parent="HitboxArea"]
+
+[node name="BreakParticles" type="Node2D" parent="."]
+
+[node name="TrailParticles" type="Node2D" parent="."]
+
+[node name="CrashSFX" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="HitboxArea" to="." method="_on_hitbox_body_entered"]

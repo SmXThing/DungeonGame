@@ -9,14 +9,13 @@ signal player_killed
 @export var inventory_space: int = 48
 @export var health_bar: TextureProgressBar
 @export var camera: Camera2D
-@export var sprites: AnimatedSprite2D
+@export var body_sprites: AnimatedSprite2D
+@export var leg_sprites: AnimatedSprite2D
+@export var arm_sprites: AnimatedSprite2D
 @export var light: PointLight2D
 @export var enable_camera_limit: bool = false
 @export var HUD: CanvasLayer
 @export var inventory_ui: CanvasLayer
-
-@onready var arm: Node2D = $Arm
-@onready var sword_marker: Marker2D = $Arm/SwordMarker
 
 const sprint_multiplier: float = 1.5
 
@@ -34,13 +33,6 @@ func _ready() -> void:
 	if enable_camera_limit:
 		camera_translation(Vector2i(0, 0), 0)
 	health_bar.value = player_health
-	# temp test item
-	var test_item = Item.new()
-	test_item.item_name = "Test Sword"
-	test_item.item_description = "A rusty old sword"
-	test_item.sprite = null
-	add_item_to_inventory(test_item)
-	print("Inventory size: ", inventory.size())
 
 func _physics_process(delta: float) -> void:
 	time += delta

@@ -2,7 +2,9 @@ extends Node
 class_name State
 
 signal transitioned
-@export var animation_sprite: AnimatedSprite2D
+@export var body: AnimatedSprite2D
+@export var legs: AnimatedSprite2D
+@export var arms: AnimatedSprite2D
 @export var machine: Node
 @export var player: Player
 

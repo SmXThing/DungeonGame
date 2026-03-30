@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://pwvssljj3qov"]
+
+[ext_resource type="PackedScene" uid="uid://cs7lq3onjnjy2" path="res://scenes/ProjectileBase.tscn" id="1_jboji"]
+[ext_resource type="Texture2D" uid="uid://bfinw1nr0ewkt" path="res://assets/GreenHeart.png" id="2_rsitn"]
+
+[sub_resource type="Gradient" id="Gradient_8heom"]
+offsets = PackedFloat32Array(0, 0.7)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6nl21"]
+gradient = SubResource("Gradient_8heom")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.4906542, 0.4906542)
+
+[node name="ProjectileBase" node_paths=PackedStringArray("light") instance=ExtResource("1_jboji")]
+light = NodePath("PointLight2D")
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_rsitn")
+
+[node name="PointLight2D" type="PointLight2D" parent="." index="5"]
+color = Color(0.48912573, 0.78030217, 0, 1)
+texture = SubResource("GradientTexture2D_6nl21")

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8lu5ecyn5m4w"]
+
+[ext_resource type="PackedScene" uid="uid://cs7lq3onjnjy2" path="res://scenes/ProjectileBase.tscn" id="1_pk1y5"]
+[ext_resource type="Texture2D" uid="uid://dul1763l6gxou" path="res://assets/EmeraldArrow.png" id="2_5vtq6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvtje"]
+size = Vector2(18, 2)
+
+[node name="ProjectileBase" instance=ExtResource("1_pk1y5")]
+
+[node name="Sprite" parent="." index="0"]
+rotation = -0.7853982
+texture = ExtResource("2_5vtq6")
+
+[node name="Hitbox" parent="HitboxArea" index="0"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_gvtje")

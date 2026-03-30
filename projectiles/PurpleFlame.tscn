@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cseqqmk7uasag"]
+
+[ext_resource type="PackedScene" uid="uid://cs7lq3onjnjy2" path="res://scenes/ProjectileBase.tscn" id="1_6siuu"]
+[ext_resource type="Texture2D" uid="uid://7cw0b30xkukk" path="res://assets/PurpleFlame.png" id="2_dhy7l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhy7l"]
+size = Vector2(8, 8)
+
+[sub_resource type="Gradient" id="Gradient_0tvfp"]
+offsets = PackedFloat32Array(0, 0.7133333)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jqopt"]
+gradient = SubResource("Gradient_0tvfp")
+width = 28
+height = 28
+fill = 1
+fill_from = Vector2(0.4813084, 0.49532712)
+
+[node name="ProjectileBase" node_paths=PackedStringArray("light") instance=ExtResource("1_6siuu")]
+light = NodePath("PointLight2D")
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_dhy7l")
+offset = Vector2(-5, 0)
+
+[node name="Hitbox" parent="HitboxArea" index="0"]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_dhy7l")
+
+[node name="PointLight2D" type="PointLight2D" parent="." index="5"]
+color = Color(0.5864834, 0.609385, 1, 1)
+texture = SubResource("GradientTexture2D_jqopt")

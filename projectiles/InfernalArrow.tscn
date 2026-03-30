@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc62bwfwo5iql"]
+
+[ext_resource type="PackedScene" uid="uid://cs7lq3onjnjy2" path="res://scenes/ProjectileBase.tscn" id="1_rj7qg"]
+[ext_resource type="Texture2D" uid="uid://hlsi0wnh3d6u" path="res://assets/InfernalArrow.png" id="2_bofy6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lmc47"]
+size = Vector2(20, 2)
+
+[node name="ProjectileBase" instance=ExtResource("1_rj7qg")]
+
+[node name="Sprite" parent="." index="0"]
+rotation = -0.7853982
+texture = ExtResource("2_bofy6")
+
+[node name="Hitbox" parent="HitboxArea" index="0"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_lmc47")

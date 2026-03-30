@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://cf5vkhnac5twe"]
+
+[ext_resource type="PackedScene" uid="uid://cs7lq3onjnjy2" path="res://scenes/ProjectileBase.tscn" id="1_cdfdy"]
+[ext_resource type="Texture2D" uid="uid://63yu0ifw8vh7" path="res://assets/MagicBallMedium.png" id="2_rcpuq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jfu4u"]
+size = Vector2(4, 4)
+
+[sub_resource type="Gradient" id="Gradient_cdfdy"]
+offsets = PackedFloat32Array(0, 0.67333335)
+colors = PackedColorArray(0.9533333, 0.9533333, 0.9533333, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kw3en"]
+gradient = SubResource("Gradient_cdfdy")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.48598132, 0.47196263)
+
+[node name="ProjectileBase" node_paths=PackedStringArray("light") instance=ExtResource("1_cdfdy")]
+light = NodePath("PointLight2D")
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_rcpuq")
+
+[node name="Hitbox" parent="HitboxArea" index="0"]
+shape = SubResource("RectangleShape2D_jfu4u")
+
+[node name="PointLight2D" type="PointLight2D" parent="." index="5"]
+energy = 0.8
+texture = SubResource("GradientTexture2D_kw3en")

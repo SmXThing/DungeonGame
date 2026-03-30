@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cb6akcem6h3ow"]
+
+[ext_resource type="PackedScene" uid="uid://cs7lq3onjnjy2" path="res://scenes/ProjectileBase.tscn" id="1_u1ejn"]
+[ext_resource type="Texture2D" uid="uid://cdiu4bbqnhjwa" path="res://assets/IceArrow.png" id="2_6yery"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bkd5o"]
+size = Vector2(12, 4)
+
+[node name="ProjectileBase" instance=ExtResource("1_u1ejn")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_6yery")
+
+[node name="Hitbox" parent="HitboxArea" index="0"]
+shape = SubResource("RectangleShape2D_bkd5o")

@@ -10,8 +10,11 @@ func _ready() -> void:
 
 func update(_delta: float) -> void:
 	if player.velocity == Vector2(0, 0):
-		animation_sprite.speed_scale = 1
+		body.speed_scale = 1
+		arms.speed_scale = 1
 		emit("idle")
+	if Input.is_action_pressed("ENTER") || Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		emit("attacking")
 
 func physics_update(_delta: float) -> void:
 	var direction: Vector2 = Input.get_vector("KEY_A", "KEY_D", "KEY_W", "KEY_S")
@@ -22,9 +25,11 @@ func physics_update(_delta: float) -> void:
 		
 		if Input.is_action_pressed("SHIFT"):
 			player.velocity *= sprint_multiplier
-			animation_sprite.speed_scale = sprint_multiplier
+			body.speed_scale = sprint_multiplier
+			legs.speed_scale = sprint_multiplier
 		else:
-			animation_sprite.speed_scale = 1
+			body.speed_scale = 1
+			legs.speed_scale = 1
 		
 		if direction.x != 0 && player.facing.x != round(direction.x):
 			player.facing.x = round(direction.x)
@@ -51,10 +56,16 @@ func _on_switched_direction() -> void:
 
 func set_anim_direction(dir: Vector2):
 	if dir.y == 1:
-		animation_sprite.play("walking_down")
+		body.play("walking_down")
+		if legs.animation != "walking_down":
+			legs.play("walking_down")
 	else:
-		animation_sprite.play("walking_up")
+		body.play("walking_up")
+		if legs.animation != "walking_up":
+			legs.play("walking_up")
 	if dir.x == 1:
-		animation_sprite.flip_h = false
+		body.flip_h = false
+		legs.flip_h = false
 	else:
-		animation_sprite.flip_h = true
+		body.flip_h = true
+		legs.flip_h = true

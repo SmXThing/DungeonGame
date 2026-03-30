@@ -64,9 +64,6 @@ func _ready() -> void:
 	for line in map_data:
 		var path: String = room_file_paths[index] + "/" + room_names[index]
 		
-		print(room_file_paths[index] + "/" + room_names[index])
-		print(room_directions[index])
-		
 		var room_scene: PackedScene = load(path)
 		var room: Room = room_scene.instantiate()
 		room.cell = cell_positions[index]
@@ -74,8 +71,8 @@ func _ready() -> void:
 			room.connected_cells.append(room.cell + dir)
 		room.global_position = to_actual(room.cell)
 		room.scene_path = path
-		if cell_positions[index] == starting_room_cell || cell_positions[index] == boss_room_cell:
-			room.modulate = Color.GREEN
+		'''if cell_positions[index] == starting_room_cell || cell_positions[index] == boss_room_cell:
+			room.modulate = Color.GREEN'''
 		
 		room_scenes[cell_positions[index]] = room
 		index += 1
@@ -86,8 +83,6 @@ func _ready() -> void:
 		enable_room_loading = false
 	else:
 		load_room(starting_room_cell)
-	
-	print(str(len(cell_positions)) + " rooms in total!")
 
 func _process(_delta: float) -> void:
 	if Input.is_key_pressed(KEY_W):

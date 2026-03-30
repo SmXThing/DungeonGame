@@ -4,13 +4,13 @@ extends Node
 Weapon Format - [Name, Description, Damage]
 Swords - [Swing Speed Scale, Diagonal Length, Diagonal Width]
 Bows - [Arrow Speed Scale, Shoot Speed Scale, Piercing]
-Staffs - [Firing Speed Scale, Piercing, AOE]
+Staffs - [Firing Speed Scale, Piercing, AOE, Focal Point]
 '''
 
 var default_weapons: Array[Array] = [
 	["Wooden_Sword", "A not-so-reliable wooden sword. At least it gets the job done.", 5, 1.0, 14, 3],
-	["Mahogany_Bow", "Somewhat worn, but intact enough to shoot enemies.", 3, 1.0, 1.0, 0],
-	["Oak_Staff", "A long, wooden stick tipped with a spiral. Casts simple fireballs.", 4, 1.0, 2, 1]
+	["Mahogany_Bow", "Somewhat worn, but intact enough to shoot enemies.", 3, 1.0, 1.0, 0, "res://projectiles/SmallArrow.tscn"],
+	["Oak_Staff", "A long, wooden stick tipped with a spiral. Casts simple fireballs.", 4, 1.0, 1, false, Vector2(18, -9), "res://projectiles/Fireball.tscn"]
 ]
 
 var common_swords: Array[Array] = [
@@ -50,59 +50,58 @@ var legendary_swords: Array[Array] = [
 ]
 
 var common_bows: Array[Array] = [
-	["Tin_Bow", "A rustic bow made of tin. A bit heavy.", 4, 1.0, 0.8, 0],
-	["Steel_Bow", "A bow made of shiny steel. It is heavy, but strong enough to pierce an enemy.", 5, 1.2, 0.8, 1],
-	["Bright_Bow", "A large bow made of a foreign material.", 7, 1.4, 0.6, 2],
+	["Tin_Bow", "A rustic bow made of tin. A bit heavy.", 4, 1.0, 0.8, 0, "res://projectiles/SmallArrow.tscn"],
+	["Steel_Bow", "A bow made of shiny steel. It is heavy, but strong enough to pierce an enemy.", 5, 1.2, 0.8, 1, "res://projectiles/SmallArrow.tscn"],
+	["Bright_Bow", "A large bow made of a foreign material.", 7, 1.4, 0.6, 2, "res://projectiles/LargeArrow.tscn"],
 ]
 
 var uncommon_bows: Array[Array] = [
-	["Gilded_Bow", "A lightweight bow that shoots fast.", 7, 1.4, 1.4, 1],
-	["Night_Bow", "A strange, purple bow.", 9, 1.0, 1.0, 1],
-	["Ice_Bow", "A magical bow made from ice that never melts. Very light.", 10, 1.2, 1.5, 1]
+	["Gilded_Bow", "A lightweight bow that shoots fast.", 7, 1.4, 1.4, 1, "res://projectiles/SmallArrow.tscn"],
+	["Night_Bow", "A strange, purple bow.", 9, 1.0, 1.0, 1, "res://projectiles/SmallArrow.tscn"],
+	["Ice_Bow", "A magical bow made from ice that never melts. Very light.", 10, 1.2, 1.5, 1, "res://projectiles/IceArrow.tscn"]
 ]
 
 var rare_bows: Array[Array] = [
-	["Reinforced_Amythest_Bow", "An amythest bow reinforced with steel. A bit slow, but arrows fired are quite fast.", 12, 1.3, 0.7, 3],
-	["Longbow", "A very large bow made of tough wood. Though it looks unassuming, it's arrows can pierce through any enemy in its path.", 15, 2.2, 0.5, 100],
-	["Rugged_Ranger_Bow", "A bow belonging to a past ranger much like yourself. Though it is old, it is still quite effective.", 16, 1.6, 1.4, 4]
+	["Reinforced_Amythest_Bow", "An amythest bow reinforced with steel. A bit slow, but arrows fired are quite fast.", 12, 1.3, 0.7, 3, "res://projectiles/LargeArrow.tscn"],
+	["Longbow", "A very large bow made of tough wood. Though it looks unassuming, it's arrows can pierce through any enemy in its path.", 15, 2.0, 0.7, 100, "res://projectiles/LargeArrow.tscn"],
+	["Rugged_Ranger_Bow", "A bow belonging to a past ranger much like yourself. Though it is old, it is still quite effective.", 16, 1.6, 1.4, 4, "res://projectiles/LargeArrow.tscn"]
 ]
 
 var epic_bows: Array[Array] = [
-	["Inferno_Bow", "A blazing, orange bow. It's quiet hot to wield. It's arrows are hot enough to pierce through all enemies in its path.", 18, 1.4, 1.5, 100],
-	["Manta_Bow", "A pristine, blue bow. It's color is reminescent of the ocean.", 19, 1.5, 2.0, 5],
-	["Emerald_Splitter", "A shimmering green bow with a complex design. Known for it's ability to shoot extremely fast arrows.", 22, 2.5, 1.0, 8]
+	["Inferno_Bow", "A blazing, orange bow. It's quiet hot to wield. It's arrows are hot enough to pierce through all enemies in its path.", 18, 1.4, 1.5, 100, "res://projectiles/InfernalArrow.tscn"],
+	["Manta_Bow", "A pristine, blue bow. It's color is reminescent of the ocean.", 19, 1.5, 2.0, 5, "res://projectiles/SteelArrow.tscn"],
+	["Emerald_Splitter", "A shimmering green bow with a complex design. Known for it's ability to shoot extremely fast arrows.", 22, 2.5, 1.0, 8, "res://projectiles/EmeraldArrow.tscn"]
 ]
 
 var legendary_bows: Array[Array] = [
-	["Twisted_Root", "A large bow imbued with a strange curse. It can fire arrows very fast, and pierce through all enemies.", 24, 1.2, 10.0, 100]
+	["Twisted_Root", "A large bow imbued with a strange curse. It can fire arrows very fast, and pierce through all enemies.", 24, 1.2, 5, 100, "res://projectiles/TwistedRootArrow.tscn"]
 ]
 
 var common_staffs: Array[Array] = [
-	["Magic_Wand", "A basic, spellcaster's wand.", 5, 1.0, 4, false],
-	["Turquoise_Staff", "A staff tipped with a turquoise gem.", 6, 1.0, 4, false],
-	["Ruby_Staff", "A dark-colored staff headed with a ruby gem.", 8, 1.2, 4, false],
-	
+	["Magic_Wand", "A basic, spellcaster's wand.", 5, 1.0, 4, false, Vector2(11, -11), "res://projectiles/GenericMagicBallSmall.tscn"],
+	["Turquoise_Staff", "A staff tipped with a turquoise gem.", 6, 1.0, 4, false, Vector2(11, -11), "res://projectiles/GenericMagicBallSmall.tscn"],
+	["Ruby_Staff", "A dark-colored staff headed with a ruby gem.", 8, 1.2, 4, false, Vector2(11, -11), "res://projectiles/GenericMagicBallSmall.tscn"],
 ]
 
 var uncommon_staffs: Array[Array] = [
-	["Bejeweled_Staff", "A strange looking staff decorated with various jewels.", 11, 1.4, 6, false],
-	["Sapphire_Staff", "A long, staff with a curved ahndle.", 13, 1.2, 0, true]
+	["Bejeweled_Staff", "A strange looking staff decorated with various jewels.", 11, 1.4, 6, false, Vector2(17, -17), "res://projectiles/GenericMagicBallSmall.tscn"],
+	["Sapphire_Staff", "A long, staff with a curved ahndle.", 13, 1.2, 0, true, Vector2(19, -19), "res://projectiles/GenericMagicBallSmall.tscn"]
 ]
 
 var rare_staffs: Array[Array] = [
-	["Emperor_Staff", "A large, regal-looking staff. It is quite heavy.", 15, 1.0, 2, true],
-	["Oceanic_Fork", "A strange, fork-shaped wand that shoots water-like projectiles.", 16, 3.0, 4, false],
-	["Amythest_Caster", "A heavy wand with a complex design.", 18, 1.4, 2, true]
+	["Emperor_Staff", "A large, regal-looking staff. It is quite heavy.", 15, 1.0, 2, true, Vector2(17, -17), "res://projectiles/GenericMagicBallMedium.tscn"],
+	["Oceanic_Fork", "A strange, fork-shaped wand that shoots water-like projectiles.", 16, 3.0, 4, false, Vector2(17, -17), "res://projectiles/GenericMagicBallSmall.tscn"],
+	["Amythest_Caster", "A heavy wand with a complex design.", 18, 1.4, 2, true,Vector2(12.5, -12.5), "res://projectiles/GenericMagicBallMedium.tscn"]
 ]
 
 var epic_staffs: Array[Array] = [
-	["Crystal_Staff", "A large staff with a blue crystal ball. Its projectiles explode and deal good damage.", 28, 1.0, 0, true],
-	["Empirical_Staff", "A light staff reinforced with iron. It can fire quickly and pierce through any enemy.", 20, 2.5, 100, false]
+	["Crystal_Staff", "A large staff with a blue crystal ball. Its projectiles explode and deal good damage.", 28, 1.0, 0, true, Vector2(14, -14), "res://projectiles/GenericMagicBallLarge.tscn"],
+	["Empirical_Staff", "A light staff reinforced with iron. It can fire quickly and pierce through any enemy.", 20, 2.5, 100, false, Vector2(16, -16), "res://projectiles/SharpCrystal.tscn"]
 ]
 
 var legendary_staffs: Array[Array] = [
-	["Jade_Caster", "A large, enchanted jade staff that shoots large, exploding projectiles.", 30, 1.5, 0, true],
-	["Cosmic_Emitter", "A pristine staff with an iridescent crystal ball at its head.", 36, 1.2, 1, true]
+	["Jade_Caster", "A large, enchanted jade staff that shoots large, exploding projectiles.", 30, 1.5, 0, true, Vector2(15, -15), "res://projectiles/GreenHeart.tscn"],
+	["Cosmic_Emitter", "A pristine staff with an iridescent crystal ball at its head.", 36, 1.2, 1, true, Vector2(17, -17), "res://projectiles/PurpleFlame.tscn"]
 ]
 
 var swords: Dictionary[String, Array] = {
@@ -141,41 +140,60 @@ func compile_weapon(weapon_type: String, weapon_info: Array, rarity: String) -> 
 		
 		sword.item_name = weapon_info[0]
 		sword.item_description = weapon_info[1]
+		
 		sword.sprite = Sprite2D.new()
 		sword.sprite.texture = load("res://weapons/swords/" + sword.item_name + ".png")
 		sword.add_child(sword.sprite)
+		
 		sword.rarity = rarity
 		sword.damage = weapon_info[2]
 		sword.attack_speed_scale = weapon_info[3]
 		sword.diagonal_range = weapon_info[4]
 		sword.diagonal_width = weapon_info[5]
+		
 		return sword
 	elif weapon_type == "bow":
 		var bow: Bow = Bow.new()
 		bow.item_name = weapon_info[0]
 		bow.item_description = weapon_info[1]
+		
+		bow.sprite = Sprite2D.new()
 		bow.sprite.texture = load("res://weapons/bows/" + bow.item_name + ".png")
+		bow.add_child(bow.sprite)
+		
 		bow.rarity = rarity
 		bow.damage = weapon_info[2]
 		bow.arrow_speed_scale = weapon_info[3]
 		bow.shoot_speed_scale = weapon_info[4]
 		bow.piercing = weapon_info[5]
+		
+		bow.projectile = load(weapon_info[6])
+		
 		return bow
 	elif weapon_type == "staff":
 		var staff: Staff = Staff.new()
+		
 		staff.item_name = weapon_info[0]
 		staff.item_description = weapon_info[1]
+		
+		staff.sprite = Sprite2D.new()
 		staff.sprite.texture = load("res://weapons/staffs/" + staff.item_name + ".png")
+		staff.add_child(staff.sprite)
+		
 		staff.rarity = rarity
 		staff.damage = weapon_info[2]
 		staff.fire_speed_scale = weapon_info[3]
 		staff.piercing = weapon_info[4]
 		staff.AOE = weapon_info[5]
+		staff.focal_point = weapon_info[6]
+		
+		staff.projectile = load(weapon_info[7])
+		
 		return staff
 	else:
 		return null
 
-func generate_random_weapon(weapon_type: String) -> Weapon:
+func generate_random_weapon(weapon_type: String) -> Array:
 	'''
 	Rarity %
 	- Common: 35%
@@ -204,4 +222,4 @@ func generate_random_weapon(weapon_type: String) -> Weapon:
 	possible_weapons = weapons[weapon_type][rarity]
 	weapon_info = possible_weapons[randi_range(0, len(possible_weapons) - 1)]
 	
-	return compile_weapon(weapon_type, weapon_info, rarity)
+	return ["Weapon", weapon_type, weapon_info, rarity]
